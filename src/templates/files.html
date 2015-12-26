@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1>Upload Successful!</h1>
+
+Here are the files you just uploaded.
+
+<a href="{{ url_for('index') }}">Back to front page</a><p>
+
+{% for file in files %}
+    <h2>{{ file }}</h2>
+    <img src="{{ url_for('static', filename='resources/{}/{}'.format(username, file)) }}">
+{% endfor %}
+
+</body>
+</html>

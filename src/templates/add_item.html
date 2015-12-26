@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h1 class="center-block"><span class="glyphicon glyphicon-plus-sign"></span> Add new item </h1>
+    <form id="new-movie-form" action="/user/items/add" method="post" enctype="multipart/form-data">
+        {% if message is defined %}
+        <h4 class="text-center"><span class="label label-danger">{{ message }}</span></h4>
+        {% endif %}
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" class="form-control" placeholder="Example: Ice Age">
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea type="text" id="description" name="description" class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="file">Image Url:</label><br>
+            <div class="btn btn-default image-preview-input"><span class="glyphicon glyphicon-folder-open"></span> <span
+                    class="image-preview-input-title">Browse</span>
+                <input type="file" id="file" name="file" accept="image/*" multipleclass="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="contact">Contact</label>
+            <input type="text" id="contact" name="contact" class="form-control" placeholder="Tel/email">
+        </div>
+
+        <button type="submit" id="submit-button" class="btn btn-primary">Add Item</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container form-width">
+    <h1 class="text-center"> Published Items </h1>
+    {% if message is defined %}
+    <h4 class="text-center"><span class="label label-danger">{{ message }}</span></h4>
+    {% endif %}
+    <a href="/user/items/add">
+        <button class="center-block btn btn-success">Add Item</button>
+    </a>
+</div>
+<div class="row">
+    {% if items|length > 0 %}
+    {% for item in items | sort(True, attribute='date_posted') %}
+    <div class="col-sm-6 col-md-3">
+        <div class="thumbnail">
+            <div class="well">
+                <a href="/user/items/detail/{{item._id}}"><h3>{{ item.title }}</h3></a>
+            </div>
+            <h6>Date Posted: {{ item.date_posted }}</h6>
+            <a class="thumbnail" href="/user/items/detail/{{item._id}}">
+                <img class="img-rounded" src="{{ url_for('static', filename='{}'.format( item.image_url)) }}">
+            </a>
+            <p><b>Contact Information: {{ item.contact }}</b></p>
+            <p>Description: {{ item.description }}</p>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <h4>You did not add any item yet; Look around you mind fine something you do not need..</h4>
+    {% endif %}
+</div>
+{% endblock %}

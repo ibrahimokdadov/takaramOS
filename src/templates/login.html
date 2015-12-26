@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container form-width">
+    <h1 class="text-center"> Login Page</h1>
+    {% if message is defined %}
+    <h4 class="text-center"><span class="label label-danger">{{ message }}</span></h4>
+    {% endif %}
+    <form id="login-form" action="/login" method="post">
+        <div class="form-group">
+            <label for="username_email">Email</label>
+            <input type="text" id="username_email" name="username_email" class="form-control" placeholder="Email@example.com">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" class="form-control">
+        </div>
+        <button type="submit" id="submit-button" class="btn btn-primary">Login</button>
+        <h5>Not a member?<a href="/register" > Sign up</a></h5>
+    </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container form-width">
+    <h1 class="text-center"> Registration Page</h1>
+    <form id="register-form" action="/register" method="post">
+        {% if message is defined %}
+        <h4 class="text-center"><span class="label label-danger">{{ message }}</span></h4>
+        {% endif %}
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" class="form-control" placeholder="Example: ibrahim">
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email" class="form-control" placeholder="Email@example.com">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" class="form-control">
+        </div>
+         <button type="submit" id="submit-button" class="btn btn-primary">Register</button>
+        <h5>Already a member?<a href="/login" > login</a></h5>
+    </form>
+</div>
+{% endblock %}
