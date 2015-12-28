@@ -21,11 +21,12 @@ This project is made using:
 * view items without loggin in
 * displays item details on click [shows only one image]
 * add items does not show to unlogged in users
+* Basic approval center for new items
 
 ###todos
 * add encryption to registration and logging in
 * add edit items
-* add approval center for new items
+~~* add approval center for new items~~
 * add admin page
 * add Multiple image gallery on detail view
 
