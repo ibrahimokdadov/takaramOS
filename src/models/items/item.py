@@ -55,6 +55,12 @@ class Item(object):
             return [cls(**item) for item in items]
 
     @classmethod
+    def get_all_approved_items(cls):
+        items = Database.find(ItemConstants.COLLECTION, {"approved": True})
+        if items is not None:
+            return [cls(**item) for item in items]
+
+    @classmethod
     def get_pending_items(cls):
         items = Database.find(ItemConstants.COLLECTION, {"approved": False})
         if items is not None:

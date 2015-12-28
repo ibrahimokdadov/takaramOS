@@ -15,7 +15,7 @@
             <div class="well">
                 <a href="/user/items/detail/{{item._id}}"><h3>{{ item.title }}</h3></a>
             </div>
-            <p>Date Posted: {{ item.date_posted }}</p>
+            <p>Date Posted: {{ item.date_posted|datetimeformat }}</p>
             <p><b>Contact Information: {{ item.contact }}</b></p>
             <img class="thumbnail img-rounded" src="{{ url_for('static', filename='{}'.format( item.image_url)) }}">
             <p>Description: {{ item.description }}</p>

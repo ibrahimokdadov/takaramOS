@@ -1,5 +1,7 @@
 import os
 from flask import Flask, render_template, request, session, make_response, url_for, send_from_directory
+
+
 from src.common.database import Database
 from src.models.items.item import Item
 from src.models.users.user import User
@@ -16,6 +18,11 @@ APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 @app.before_first_request
 def initialize_database():
     Database.initialize()
+
+@app.template_filter('datetimeformat')
+def datetimeformat(value, format='%d-%m-%Y @ %H:%M'):
+    return value.strftime(format)
+
 
 
 @app.route('/')
@@ -77,7 +84,7 @@ def view_items():
 
 @app.route('/items/view')
 def view_all_items():
-    items = Item.get_all_items()
+    items = Item.get_all_approved_items()
     return render_template("all_items.html", items=items)
 
 
