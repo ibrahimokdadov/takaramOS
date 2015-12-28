@@ -26,7 +26,7 @@ This project is made using:
 ###todos
 * add encryption to registration and logging in
 * add edit items
-~~* add approval center for new items~~
+* ~~add approval center for new items~~
 * add admin page
 * add Multiple image gallery on detail view
 
