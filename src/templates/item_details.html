@@ -10,7 +10,7 @@
     <p>Contact: {{ item.contact }}</p>
 
     <a class="thumbnail" href="#">
-        <p>Image URL: {{ item.image_url }}</p>
+
         <img class="img-rounded" src="{{ url_for('static', filename='{}'.format( item.image_url)) }}">
     </a>
 

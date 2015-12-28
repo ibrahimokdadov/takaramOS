@@ -142,6 +142,24 @@ def delete_item(item_id):
         return render_template("login.html", message="You must be logged-in to remove items.")
 
 
+@app.route('/admin/pending/items')
+def pending_items():
+    items = Item.get_pending_items()
+    return render_template("admin/pending_items.html", items=items)
+
+
+@app.route('/user/items/approve/<string:item_id>')
+def approve_item(item_id):
+    if session.get('email') is not None:
+        item = Item.get_item_by_id(item_id)
+        if item is not None:
+            Item.update_item(item_id)
+            return make_response(pending_items())
+        return make_response(pending_items())
+    else:
+        return render_template("login.html", message="You must be logged-in to remove items.")
+
+
 @app.route('/logout')
 def logout():
     session['email'] = None

@@ -9,15 +9,16 @@ __author__ = 'ibininja'
 
 
 class Item(object):
-    def __init__(self, title, description, image_url, contact, user_id, _id=None, date_posted=datetime.datetime.utcnow()):
+    def __init__(self, title, description, image_url, contact, user_id, approved=False, _id=None,
+                 date_posted=datetime.datetime.utcnow()):
         self.title = title
         self.description = description
         self.image_url = image_url
         self.date_posted = date_posted
         self.contact = contact
         self.user_id = user_id
+        self.approved = approved
         self._id = uuid.uuid4().hex if _id is None else _id
-
 
     def json(self):
         return {
@@ -27,6 +28,7 @@ class Item(object):
             "date_posted": self.date_posted,
             "contact": self.contact,
             "user_id": self.user_id,
+            "approved": self.approved,
             "_id": self._id,
 
         }
@@ -52,8 +54,15 @@ class Item(object):
         if items is not None:
             return [cls(**item) for item in items]
 
+    @classmethod
+    def get_pending_items(cls):
+        items = Database.find(ItemConstants.COLLECTION, {"approved": False})
+        if items is not None:
+            return [cls(**item) for item in items]
 
     def remove_item(self):
-        Database.remove(ItemConstants.COLLECTION, {"_id":self._id})
+        Database.remove(ItemConstants.COLLECTION, {"_id": self._id})
 
-
+    @staticmethod
+    def update_item(item_id):
+        Database.update_one(ItemConstants.COLLECTION, {"_id": item_id}, {"$set": {"approved": True}})
