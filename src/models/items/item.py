@@ -69,6 +69,5 @@ class Item(object):
     def remove_item(self):
         Database.remove(ItemConstants.COLLECTION, {"_id": self._id})
 
-    @staticmethod
-    def update_item(item_id):
-        Database.update_one(ItemConstants.COLLECTION, {"_id": item_id}, {"$set": {"approved": True}})
+    def update_item(self, attribute_name, attribute_value):
+        Database.update_one(ItemConstants.COLLECTION, {"_id": self._id}, {"$set": {attribute_name: attribute_value}})

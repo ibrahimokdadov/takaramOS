@@ -1,6 +1,6 @@
 import os
 
-from flask import Blueprint, session, render_template, make_response, request
+from flask import Blueprint, session, render_template, make_response, request, jsonify
 
 from src.models.items.item import Item
 from src.models.users.user import User
@@ -91,3 +91,42 @@ def delete_item(item_id):
         return render_template("items.html", message="You can't remove item")
     else:
         return render_template("login.html", message="You must be logged-in to remove items.")
+
+
+@item_blueprints.route('/user/items/edit/<string:item_id>/<string:attribute_name>/<string:attribute_value>')
+def edit_item(item_id, attribute_name, attribute_value):
+    item = Item.get_item_by_id(item_id)
+    if item is not None:
+        item.update_item(attribute_name=attribute_name, attribute_value=attribute_value)
+        return render_template("item_details.html", item=item)
+    else:
+        return render_template("message_center.html",
+                               message="Could not update Item {} . Contact Us if you need further information!".format(
+                                       item.title))
+
+
+@item_blueprints.route('/user/item/update/title', methods=['GET', 'POST'])
+def update_title():
+    item_id = request.form['pk']
+    value = request.form['value']
+    item = Item.get_item_by_id(item_id)
+    item.update_item("title", value)
+    return render_template("item_details.html", item=item)
+
+
+@item_blueprints.route('/user/item/update/description', methods=['GET', 'POST'])
+def update_description():
+    item_id = request.form['pk']
+    value = request.form['value']
+    item = Item.get_item_by_id(item_id)
+    item.update_item("description", value)
+    return render_template("item_details.html", item=item)
+
+
+@item_blueprints.route('/user/item/update/contact', methods=['GET', 'POST'])
+def update_contact():
+    item_id = request.form['pk']
+    value = request.form['value']
+    item = Item.get_item_by_id(item_id)
+    item.update_item("contact", value)
+    return render_template("item_details.html", item=item)

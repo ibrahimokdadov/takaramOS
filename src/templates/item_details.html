@@ -1,13 +1,30 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container">
-    <h1 class="center-block"> {{item.title}} details </h1>
 
+    {% if session['email'] %}
+    <h1 class="center-block"><a href="#" id="title" data-type="text" data-url="/user/item/update/title"
+                                data-pk="{{item._id}}" data-title="Change your title"> {{item.title}} </a> 's details</h1>
+    {% else %}
+    <h1 class="center-block"> {{item.title}} details </h1>
+    {% endif %}
+
+    {% if session['email'] %}
+    <p>Description: <a href="#" id="description" data-type="textarea" data-url="/user/item/update/description"
+                       data-pk="{{item._id}}"
+                       data-title="Change your description">{{ item.description }}</a></p>
+    {% else %}
     <p>Description: {{ item.description }}</p>
+    {% endif %}
 
     <p>Date Posted: {{ item.date_posted|datetimeformat }}</p>
 
+    {% if session['email'] %}
+    <p>Contact: <a href="#" id="contact" data-type="text" data-url="/user/item/update/contact" data-pk="{{item._id}}"
+                   data-title="Change contact details">{{ item.contact }}</a></p>
+    {% else %}
     <p>Contact: {{ item.contact }}</p>
+    {% endif %}
 
     <a class="thumbnail" href="#">
 
@@ -18,4 +35,5 @@
     <hr>
 
 </div>
+
 {% endblock %}

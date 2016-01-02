@@ -11,6 +11,10 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"
             integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ=="
             crossorigin="anonymous"></script>
+    {% if session['email'] %}
+    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+
+    {% endif %}
 </head>
 <body>
 <div class="container-fluid">
@@ -40,16 +44,16 @@
                         </ul>
                         {% if session['email'] %}
 
-                            <ul class="nav navbar-nav">
+                        <ul class="nav navbar-nav">
                             <li>
 
                                 <a href="/user/items/view">My Items</a>
 
                             </li>
-                                </ul>
+                        </ul>
                         <ul class="navbar-form navbar-left">
                             <div class="form-group">
-                            You are logged-in as: <span class="label label-default">{{ session['email'] }}</span>
+                                You are logged-in as: <span class="label label-default">{{ session['email'] }}</span>
                             </div>
 
                         </ul>
@@ -69,14 +73,20 @@
 
                         </ul>
                         {% endif %}
-                    </div>
                 </div>
-            </nav>
-            {% block content %}
 
-            {% endblock %}
+            </nav>
         </div>
+        {% block content %}
+
+        {% endblock %}
     </div>
 </div>
+</div>
 </body>
+    {% if session['email'] %}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+    {% endif %}
+<script src="{{ url_for('static', filename='js/js.js')}}"></script>
+
 </html>
