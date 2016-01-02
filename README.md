@@ -13,6 +13,7 @@ This project is made using:
 * Python
 * MongoDB
 * Bootstrap
+* x-editable
 
 ###current features
 * register and signup
@@ -21,14 +22,18 @@ This project is made using:
 * view items without loggin in
 * displays item details on click [shows only one image]
 * add items does not show to unlogged in users
-* Basic approval center for new items
+* basic approval center for new items
+* logged in users can edit posts
 
 ###todos
 * add encryption to registration and logging in
-* add edit items
+* ~~add edit items~~
 * ~~add approval center for new items~~
 * add admin page
+  * ability to edit items
+  * view basic statistics (number of items, number of user)
 * add Multiple image gallery on detail view
+* verify each users edits their own items
 
 ###license
 MIT?
