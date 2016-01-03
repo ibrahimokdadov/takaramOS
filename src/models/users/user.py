@@ -29,20 +29,20 @@ class User(object):
         item.save_to_mongo()
 
     @classmethod
-    def get_user_by_id(cls, user_id):
-        user = Database.find_one(UserConstants.COLLECTION, {"_id": user_id})
+    def get_user_by_id(cls, user_id, collection):
+        user = Database.find_one(collection, {"_id": user_id})
         if user is not None:
             return cls(**user)
 
     @classmethod
-    def get_user_by_email(cls, email):
-        user = Database.find_one(UserConstants.COLLECTION, {"email": email})
+    def get_user_by_email(cls, email, collection):
+        user = Database.find_one(collection, {"email": email})
         if user is not None:
             return cls(**user)
 
     @classmethod
-    def get_user_by_username(cls, username):
-        user = Database.find_one(UserConstants.COLLECTION, {"username": username})
+    def get_user_by_username(cls, username, collection):
+        user = Database.find_one(collection, {"username": username})
         if user is not None:
             return cls(**user)
 

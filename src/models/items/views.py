@@ -4,6 +4,9 @@ from flask import Blueprint, session, render_template, make_response, request, j
 
 from src.models.items.item import Item
 from src.models.users.user import User
+import src.models.admins.constants as AdminConstants
+import src.models.items.constants as ItemConstants
+import src.models.users.constants as UserConstants
 
 __author__ = 'ibininja'
 
@@ -20,7 +23,7 @@ def view_items():
     else:
         if session['email'] is None:
             return render_template("login.html", message="You must be logged in to view your items")
-        user = User.get_user_by_email(session['email'])
+        user = User.get_user_by_email(session['email'], UserConstants.COLLECTION)
         items = Item.get_items_by_user_id(user._id)
         return render_template("items.html", items=items)
 
@@ -43,7 +46,7 @@ def add_item():
             title = request.form['title']
             description = request.form['description']
             contact = request.form['contact']
-            user = User.get_user_by_email(session['email'])
+            user = User.get_user_by_email(session['email'],UserConstants.COLLECTION)
             # Target folder for these uploads.
             target = os.path.join(APP_ROOT, 'static/resources/images/{}'.format(user.username))
             # target = './static/resources/{}'.format(upload_key)
@@ -84,7 +87,7 @@ def delete_item(item_id):
     if session.get('email') is not None:
         item = Item.get_item_by_id(item_id)
         if item is not None:
-            user = User.get_user_by_email(session['email'])
+            user = User.get_user_by_email(session['email'], UserConstants.COLLECTION)
             if item.user_id == user._id:
                 item.remove_item()
                 return make_response(view_items())

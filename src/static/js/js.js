@@ -1,19 +1,19 @@
 $(function() {
 
-   $('#title').editable({
+   $('#x-title').editable({
             placement: "top",
             error: function (errors) {
             }
         });
 
-   $('#description').editable({
+   $('#x-description').editable({
             mode:"inline",
             placement: "right",
             error: function (errors) {
             }
         });
 
-   $('#contact').editable({
+   $('#x-contact').editable({
             mode:"inline",
             placement: "right",
             error: function (errors) {

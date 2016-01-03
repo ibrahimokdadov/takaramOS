@@ -12,7 +12,8 @@
             integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ=="
             crossorigin="anonymous"></script>
     {% if session['email'] %}
-    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css"
+          rel="stylesheet"/>
 
     {% endif %}
 </head>
@@ -72,7 +73,38 @@
                             </div>
 
                         </ul>
+
                         {% endif %}
+                    </li>
+                    {% if session['admin'] %}
+                    <li class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+                        <ul class="nav navbar-nav">
+                            <div class="navbar-header">
+                              <a class="navbar-brand" href="#">
+                                <span class="glyphicon glyphicon-cog"></span>
+                              </a>
+                                </div>
+                            <li >
+                                <a href="/admin/dashboard">Dashboard <span class="sr-only">(current)</span>
+                                </a>
+                            </li>
+                        </ul>
+
+
+                        <ul class="nav navbar-nav">
+                            <li>
+
+                                <a href="/admin/pending/items">View Pending Items</a>
+
+                            </li>
+                        </ul>
+
+
+
+
+                    </li>
+                    {% endif %}
+
                 </div>
 
             </nav>
@@ -84,9 +116,9 @@
 </div>
 
 </body>
-    {% if session['email'] %}
-    <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
-    {% endif %}
+{% if session['email'] %}
+<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+{% endif %}
 <script src="{{ url_for('static', filename='js/js.js')}}"></script>
 
 </html>

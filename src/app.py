@@ -3,10 +3,12 @@ from flask import Flask, render_template, request, session, make_response, url_f
 
 
 from src.common.database import Database
+from src.models.admins.admin import Admin
 from src.models.admins.views import admin_blueprints
-from src.models.items.item import Item
 from src.models.items.views import item_blueprints, view_items
 from src.models.users.user import User
+import src.models.admins.constants as AdminConstants
+import src.models.users.constants as UserConstants
 
 __author__ = 'ibininja'
 
@@ -57,10 +59,13 @@ def login():
         else:
             username_email = request.form['username_email']
             password = request.form['password']
-            user = User.get_user_by_email(username_email)
+            user = User.get_user_by_email(username_email, UserConstants.COLLECTION)
             if user is not None:
                 if user.password == password:
                     session['email'] = user.email
+                    admin = Admin.get_user_by_email(username_email, AdminConstants.COLLECTION)
+                    if admin is not None:
+                        session['admin'] = admin.email
                     return make_response(view_items())
                 else:
                     return render_template("login.html", message="Invalid login")
@@ -79,6 +84,7 @@ def login():
 @app.route('/logout')
 def logout():
     session['email'] = None
+    session['admin'] = None
     return render_template("home.html")
 
 
