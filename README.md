@@ -24,6 +24,8 @@ This project is made using:
 * add items does not show to unlogged in users
 * basic approval center for new items
 * logged in users can edit posts
+* Added Admin access
+ * view basic statistics (number of items, number of user)
 
 ###todos
 * add encryption to registration and logging in
@@ -31,7 +33,7 @@ This project is made using:
 * ~~add approval center for new items~~
 * add admin page
   * ability to edit items
-  * view basic statistics (number of items, number of user)
+  * ~~view basic statistics (number of items, number of user)~~
 * add Multiple image gallery on detail view
 * verify each users edits their own items
 
