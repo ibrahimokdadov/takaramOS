@@ -7,7 +7,7 @@ from src.models.users.user import User
 
 __author__ = 'ibininja'
 
-item_blueprints = Blueprint('folders', __name__)
+item_blueprints = Blueprint('items', __name__)
 
 # UPLOAD_FOLDER = './static/resources/'
 APP_ROOT = (os.path.realpath('./'))

@@ -26,6 +26,14 @@ class Database(object):
         return Database.DB[collection].find()
 
     @staticmethod
+    def find_all_count(collection):
+        return Database.DB[collection].find().count()
+
+    @staticmethod
+    def find_count(collection, query):
+        return Database.DB[collection].find(query).count()
+
+    @staticmethod
     def find_one(collection, query):
         return Database.DB[collection].find_one({'$or': [query]})
 
