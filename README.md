@@ -24,7 +24,7 @@ This project is made using:
 * add items does not show to unlogged in users
 * basic approval center for new items
 * logged in users can edit posts
-* Added Admin access
+* Added Admin access (admin automatically detected)
  * view basic statistics (number of items, number of user)
 
 ###todos
