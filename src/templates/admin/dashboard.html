@@ -13,11 +13,83 @@
                 {% if message is defined %}
                 <h4 class="text-center "><span class="label label-danger">{{ message }}</span></h4>
                 {% endif %}
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="panel panel-default">
 
+                                <div class="panel-body">
+                                    <div class="col-md-6">
+                                        <i class="fa fa-users fa-5x"></i>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h1 class="text-center">{{users_count}}</h1>
+                                    </div>
+                                </div>
+                                <div class="panel-footer">
+                                    Show Users
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="panel panel-default">
+
+                                <div class="panel-body">
+                                    <div class="col-md-6">
+                                        <i class="fa fa-list fa-5x"></i>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h1 class="text-center">{{items_count}}</h1>
+                                    </div>
+                                </div>
+                                <div class="panel-footer">
+                                    Show all items
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="panel panel-default">
+
+                                <div class="panel-body">
+                                    <div class="col-md-6">
+                                        <i class="fa fa-spinner fa-5x"></i>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h1 class="text-center">
+                                            <a href="/admin/pending/items">{{pending_items_count}} </a>
+                                        </h1>
+                                    </div>
+                                </div>
+                                <div class="panel-footer">
+                                    <a href="/admin/pending/items">Show pending items</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="panel panel-default">
+
+                                <div class="panel-body">
+                                    <div class="col-md-6">
+                                        <i class="fa fa-thumbs-up fa-5x"></i>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h1 class="text-center">
+                                            {{approved_items_count}}
+                                        </h1>
+                                    </div>
+                                </div>
+                                <div class="panel-footer">
+                                    Show approved items
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="col-xs-6 col-md-4"><h2>Number of Users: {{users_count}}</h2></div>
                 <div class="col-xs-6 col-md-4"><h2>Items available: {{items_count}}</h2></div>
-                <div class="col-xs-6 col-md-4"><a href="/admin/pending/items"><h2>Items Pending: {{pending_items_count}}</h2></a></div>
+                <div class="col-xs-6 col-md-4"><a href="/admin/pending/items"><h2>Items Pending:
+                    {{pending_items_count}}</h2></a></div>
                 <div class="col-xs-6 col-md-4"><h2>Items Approved: {{approved_items_count}} </h2></div>
             </div>
         </div>
