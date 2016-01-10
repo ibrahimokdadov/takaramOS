@@ -56,7 +56,7 @@ def approve_item(item_id):
     if session.get('admin') is not None:
         item = Item.get_item_by_id(item_id)
         if item is not None:
-            Item.update_item(item_id)
+            item.update_item(attribute_name="approved", attribute_value=True)
             return make_response(pending_items())
         return make_response(pending_items())
     else:
