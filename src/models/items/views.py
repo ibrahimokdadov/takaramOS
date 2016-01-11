@@ -75,7 +75,13 @@ def add_item():
 def item_details(item_id):
     item = Item.get_item_by_id(item_id)
     if item is not None:
-        return render_template("item_details.html", item=item)
+        if session.get('email') is not None:
+            user = User.get_user_by_email(email=session['email'], collection=UserConstants.COLLECTION)
+
+            if (user._id == item.user_id) or (session.get('admin') is not None):
+                return render_template("item_details.html", item=item, editable=True)
+            else:
+                return render_template("item_details.html", item=item)
     else:
         return render_template("message_center.html",
                                message="Item {} does not have details. Contact Us if you need further information!".format(
@@ -87,7 +93,7 @@ def delete_item(item_id):
     if session.get('email') is not None:
         item = Item.get_item_by_id(item_id)
         if item is not None:
-            user = User.get_user_by_email(session['email'], UserConstants.COLLECTION)
+            user = User.get_user_by_email(email=session['email'], collection=UserConstants.COLLECTION)
             if item.user_id == user._id:
                 item.remove_item()
                 return make_response(view_items())
@@ -101,7 +107,11 @@ def edit_item(item_id, attribute_name, attribute_value):
     item = Item.get_item_by_id(item_id)
     if item is not None:
         item.update_item(attribute_name=attribute_name, attribute_value=attribute_value)
-        return render_template("item_details.html", item=item)
+        if session.get('admin') is not None:
+            return render_template("item_details.html", item=item)
+        else:
+            item.update_item(attribute_name="approved", attribute_value=False)
+            return render_template("message_center.html", message="Item will published as soon as the change is approved")
     else:
         return render_template("message_center.html",
                                message="Could not update Item {} . Contact Us if you need further information!".format(
@@ -114,7 +124,11 @@ def update_title():
     value = request.form['value']
     item = Item.get_item_by_id(item_id)
     item.update_item("title", value)
-    return render_template("item_details.html", item=item)
+    if session.get('admin') is not None:
+        return render_template("item_details.html", item=item)
+    else:
+        item.update_item(attribute_name="approved", attribute_value=False)
+        return render_template("message_center.html", message="Item will published as soon as the change is approved")
 
 
 @item_blueprints.route('/user/item/update/description', methods=['GET', 'POST'])
@@ -123,7 +137,11 @@ def update_description():
     value = request.form['value']
     item = Item.get_item_by_id(item_id)
     item.update_item("description", value)
-    return render_template("item_details.html", item=item)
+    if session.get('admin') is not None:
+        return render_template("item_details.html", item=item)
+    else:
+        item.update_item(attribute_name="approved", attribute_value=False)
+        return render_template("message_center.html", message="Item will published as soon as the change is approved")
 
 
 @item_blueprints.route('/user/item/update/contact', methods=['GET', 'POST'])
@@ -132,4 +150,8 @@ def update_contact():
     value = request.form['value']
     item = Item.get_item_by_id(item_id)
     item.update_item("contact", value)
-    return render_template("item_details.html", item=item)
+    if session.get('admin') is not None:
+        return render_template("item_details.html", item=item)
+    else:
+        item.update_item(attribute_name="approved", attribute_value=False)
+        return render_template("message_center.html", message="Item will published as soon as the change is approved")

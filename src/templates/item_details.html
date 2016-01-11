@@ -1,15 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container">
-
-    {% if session['email'] %}
+    <h4 class="text-center"><span id="msg" class="label label-danger"></span></h4>
+    {% if editable is defined %}
     <h1 class="center-block"><a href="#" id="x-title" data-type="text" data-url="/user/item/update/title"
-                                data-pk="{{item._id}}" data-title="Change your title"> {{item.title}} </a> 's details</h1>
+                                data-pk="{{item._id}}" data-title="Change your title"> {{item.title}} </a> 's details
+    </h1>
     {% else %}
     <h1 class="center-block"> {{item.title}} details </h1>
     {% endif %}
 
-    {% if session['email'] %}
+    {% if editable is defined %}
     <p>Description: <a href="#" id="x-description" data-type="textarea" data-url="/user/item/update/description"
                        data-pk="{{item._id}}"
                        data-title="Change your description">{{ item.description }}</a></p>
@@ -19,7 +20,7 @@
 
     <p>Date Posted: {{ item.date_posted|datetimeformat }}</p>
 
-    {% if session['email'] %}
+    {% if editable is defined %}
     <p>Contact: <a href="#" id="x-contact" data-type="text" data-url="/user/item/update/contact" data-pk="{{item._id}}"
                    data-title="Change contact details">{{ item.contact }}</a></p>
     {% else %}
@@ -36,4 +37,38 @@
 
 </div>
 
+<script>
+$(function() {
+   $('#x-title').editable({
+            placement: "top",
+            error: function (errors) {
+            },
+            success: function(response, newValue){
+            document.getElementById('msg').innerHTML = 'Change has been made; It will be online as soon as it is approved.';
+
+            }
+        });
+
+   $('#x-description').editable({
+            mode:"inline",
+            placement: "right",
+            error: function (errors) {
+            },
+            success: function(response, newValue){
+            document.getElementById('msg').innerHTML = 'Change has been made; It will be online as soon as it is approved.';
+            alert("1");
+            }
+        });
+
+   $('#x-contact').editable({
+            mode:"inline",
+            placement: "right",
+            error: function (errors) {
+            },
+            success: function(response, newValue){
+            document.getElementById('msg').innerHTML = 'Change has been made; It will be online as soon as it is approved.';
+            }
+        });
+  });
+</script>
 {% endblock %}
