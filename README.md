@@ -18,6 +18,7 @@ This project is made using:
 ###current features
 * register and signup
 * add item [inc. uploading images]
+* each users edits their own items
 * delete item
 * view items without loggin in
 * displays item details on click [shows only one image]
@@ -25,17 +26,20 @@ This project is made using:
 * basic approval center for new items
 * logged in users can edit posts
 * Added Admin access (admin automatically detected)
+ * ability to edit items
  * view basic statistics (number of items, number of user)
 
 ###todos
 * add encryption to registration and logging in
+* add Multiple image gallery on detail view
+
+###done
 * ~~add edit items~~
 * ~~add approval center for new items~~
-* add admin page
-  * ability to edit items
-  * ~~view basic statistics (number of items, number of user)~~
-* add Multiple image gallery on detail view
-* verify each users edits their own items
+* ~~add admin page~~
+  * ~~ability to edit items~~
+  * ~~view basic statistics (number of items, number of user)~~* 
+* ~~verify each users edits their own items~~
 
 ###license
 MIT?
