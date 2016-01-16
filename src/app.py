@@ -1,7 +1,6 @@
 import os
 from flask import Flask, render_template, request, session, make_response, url_for, send_from_directory
 
-
 from src.common.database import Database
 from src.models.admins.admin import Admin
 from src.models.admins.views import admin_blueprints
@@ -21,14 +20,15 @@ APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 app.register_blueprint(item_blueprints)
 app.register_blueprint(admin_blueprints)
 
+
 @app.before_first_request
 def initialize_database():
     Database.initialize()
 
+
 @app.template_filter('datetimeformat')
 def datetimeformat(value, format='%d-%m-%Y @ %H:%M'):
     return value.strftime(format)
-
 
 
 @app.route('/')
@@ -79,8 +79,6 @@ def login():
             return render_template("login.html")
 
 
-
-
 @app.route('/logout')
 def logout():
     session['email'] = None
@@ -89,4 +87,4 @@ def logout():
 
 
 if __name__ == "__main__":
-    app.run(port=4555, debug=True)
+    app.run(port=4556, debug=True)
