@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pinterest.css')}}">
+<script src="{{ url_for('static', filename='js/pinterest.js')}}"></script>
+
 <div class="container form-width">
     <h1 class="text-center"> Published Items </h1>
     {% if message is defined %}
@@ -9,10 +12,11 @@
         <button class="center-block btn btn-success">Add Item</button>
     </a>
 </div>
-<div class="row">
+<hr>
+<section id="pinBoot">
     {% if items|length > 0 %}
     {% for item in items | sort(True, attribute='date_posted') %}
-    <div class="col-sm-6 col-md-3">
+     <article class="white-panel">
         <div class="thumbnail">
             <div class="well">
                 <a href="/user/items/detail/{{item._id}}"><h3>{{ item.title }}</h3></a>
@@ -24,10 +28,10 @@
             <p><b>Contact Information: {{ item.contact }}</b></p>
             <p>Description: {{ item.description }}</p>
         </div>
-    </div>
+    </article>
     {% endfor %}
     {% else %}
     <h4>You did not add any item yet; Look around you mind fine something you do not need..</h4>
     {% endif %}
-</div>
+
 {% endblock %}
