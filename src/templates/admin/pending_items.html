@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pinterest.css')}}">
+<script src="{{ url_for('static', filename='js/pinterest.js')}}"></script>
 <div class="container form-width">
     <h1 class="text-center"> Pending Items </h1>
     {% if message is defined %}
@@ -7,10 +9,10 @@
     {% endif %}
 
 </div>
-<div class="row">
+<section id="pinBoot">
     {% if items|length > 0 %}
     {% for item in items | sort(True, attribute='date_posted') %}
-    <div class="col-sm-6 col-md-4">
+    <article class="white-panel">
         <div class="thumbnail">
             <div class="well">
                 <a href="/user/items/detail/{{item._id}}"><h3>{{ item.title }}</h3></a>
@@ -23,10 +25,10 @@
             <a class="label label-danger" href="/user/items/delete/{{item._id}}">Delete</a>
         </div>
         <hr>
-    </div>
+    </article>
     {% endfor %}
     {% else %}
     <h4>It is like a desert in here. No pending Items</h4>
     {% endif %}
-</div>
+</section>
 {% endblock %}

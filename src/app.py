@@ -27,7 +27,7 @@ def initialize_database():
 
 
 @app.template_filter('datetimeformat')
-def datetimeformat(value, format='%d-%m-%Y @ %H:%M'):
+def datetimeformat(value, format='%d/%m/%Y @ %H:%M'):
     return value.strftime(format)
 
 
