@@ -1,4 +1,7 @@
 import uuid
+
+import datetime
+
 import src.models.users.constants as UserConstants
 from src.common.database import Database
 from src.models.items.item import Item
@@ -7,10 +10,11 @@ __author__ = 'ibininja'
 
 
 class User(object):
-    def __init__(self, username, email, password, _id=None):
+    def __init__(self, username, email, password, date_created=datetime.datetime.utcnow(), _id=None):
         self.username = username
         self.email = email
         self.password = password
+        self.date_created= date_created
         self._id = uuid.uuid4().hex if _id is None else _id
 
     def json(self):
@@ -18,6 +22,7 @@ class User(object):
             "username": self.username,
             "email": self.email,
             "password": self.password,
+            "date_created": self.date_created,
             "_id": self._id
         }
 
@@ -46,3 +51,8 @@ class User(object):
         if user is not None:
             return cls(**user)
 
+    @classmethod
+    def get_all_users(cls):
+        users = Database.find_all(UserConstants.COLLECTION)
+        if users is not None:
+            return [cls(**user) for user in users]

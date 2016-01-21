@@ -8,6 +8,7 @@ from src.models.items.views import item_blueprints, view_items
 from src.models.users.user import User
 import src.models.admins.constants as AdminConstants
 import src.models.users.constants as UserConstants
+from src.models.users.views import user_blueprints
 
 __author__ = 'ibininja'
 
@@ -19,6 +20,7 @@ APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 app.register_blueprint(item_blueprints)
 app.register_blueprint(admin_blueprints)
+app.register_blueprint(user_blueprints)
 
 
 @app.before_first_request

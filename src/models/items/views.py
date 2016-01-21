@@ -82,6 +82,8 @@ def item_details(item_id):
                 return render_template("item_details.html", item=item, editable=True)
             else:
                 return render_template("item_details.html", item=item)
+        else:
+            return render_template("item_details.html", item=item)
     else:
         return render_template("message_center.html",
                                message="Item {} does not have details. Contact Us if you need further information!".format(
