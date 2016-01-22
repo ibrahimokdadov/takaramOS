@@ -12,9 +12,9 @@ This version is the alpha version many features are missing. Hopefully I will be
 
 ###technicalilites
 This project is made using:
-* Python
-* MongoDB
-* Bootstrap
+* python
+* mongoDB
+* bootstrap
 * x-editable
 
 ###current features
@@ -30,6 +30,8 @@ This project is made using:
 * Added Admin access (admin automatically detected)
  * ability to edit items
  * view basic statistics (number of items, number of user)
+ * view list of users
+ * delete specific user
 
 ###todos
 * add encryption to registration and logging in
