@@ -58,5 +58,9 @@ class Database(object):
         return Database.DB[collection].remove(query)
 
     @staticmethod
+    def remove_one(collection, query):
+        return Database.DB[collection].delete_one(query)
+
+    @staticmethod
     def update_one(collection, query, setquery):
         return Database.DB[collection].update(query, setquery)

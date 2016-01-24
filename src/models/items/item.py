@@ -2,6 +2,8 @@ import uuid
 
 import datetime
 
+import pymongo
+
 import src.models.items.constants as ItemConstants
 from src.common.database import Database
 
@@ -71,3 +73,11 @@ class Item(object):
 
     def update_item(self, attribute_name, attribute_value):
         Database.update_one(ItemConstants.COLLECTION, {"_id": self._id}, {"$set": {attribute_name: attribute_value}})
+
+    @classmethod
+    def search_items(cls, words):
+        #"$caseSensitive": True for mongodb version 3.2
+        results = Database.find(ItemConstants.COLLECTION,
+                                {"approved": True, "$text": {"$search": words}})
+        if results is not None:
+            return [cls(**result) for result in results]

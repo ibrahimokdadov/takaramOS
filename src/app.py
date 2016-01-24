@@ -4,10 +4,12 @@ from flask import Flask, render_template, request, session, make_response, url_f
 from src.common.database import Database
 from src.models.admins.admin import Admin
 from src.models.admins.views import admin_blueprints
+from src.models.items.item import Item
 from src.models.items.views import item_blueprints, view_items
 from src.models.users.user import User
 import src.models.admins.constants as AdminConstants
 import src.models.users.constants as UserConstants
+import src.models.items.constants as ItemConstants
 from src.models.users.views import user_blueprints
 
 __author__ = 'ibininja'
@@ -47,10 +49,15 @@ def register():
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
-        user = User(username=username, email=email, password=password)
-        user.save_to_mongo()
-        session['email'] = user.email
-        return make_response(view_items())
+        user = User.get_user_by_username(username, UserConstants.COLLECTION)
+        if user is None:
+            user = User.get_user_by_email(email, UserConstants.COLLECTION)
+            if user is None:
+                user = User(username=username, email=email, password=password)
+                user.save_to_mongo()
+                session['email'] = user.email
+                return make_response(view_items())
+        return render_template("register.html", message="Opps...Account information (username/email) are taken...Are you sure it is not you?")
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -87,6 +94,11 @@ def logout():
     session['admin'] = None
     return render_template("home.html")
 
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    word = request.form['search_box']
+    results = Item.search_items(word)
+    return render_template("search.html", results=results)
 
 if __name__ == "__main__":
     app.run(port=4556, debug=True)

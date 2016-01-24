@@ -56,3 +56,7 @@ class User(object):
         users = Database.find_all(UserConstants.COLLECTION)
         if users is not None:
             return [cls(**user) for user in users]
+
+    @staticmethod
+    def delete_user(user_id):
+        result = Database.remove()
