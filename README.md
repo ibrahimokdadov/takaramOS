@@ -27,11 +27,12 @@ This project is made using:
 * add items does not show to unlogged in users
 * basic approval center for new items
 * logged in users can edit posts
-* Added Admin access (admin automatically detected)
+* added Admin access (admin automatically detected)
  * ability to edit items
  * view basic statistics (number of items, number of user)
  * view list of users
  * delete specific user
+* ability to search for items
 
 ###todos
 * add encryption to registration and logging in
@@ -44,6 +45,7 @@ This project is made using:
   * ~~ability to edit items~~
   * ~~view basic statistics (number of items, number of user)~~* 
 * ~~verify each users edits their own items~~
+* ~~ability to search for items and in description~~
 
 ###license
 MIT?
