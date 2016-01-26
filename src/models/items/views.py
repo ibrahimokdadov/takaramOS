@@ -46,7 +46,7 @@ def add_item():
             title = request.form['title']
             description = request.form['description']
             contact = request.form['contact']
-            user = User.get_user_by_email(session['email'],UserConstants.COLLECTION)
+            user = User.get_user_by_email(session['email'], UserConstants.COLLECTION)
             # Target folder for these uploads.
             target = os.path.join(APP_ROOT, 'static/resources/images/{}'.format(user.username))
             # target = './static/resources/{}'.format(upload_key)
@@ -67,7 +67,6 @@ def add_item():
                 upload.save(destination)
             user.add_item(title=title, description=description,
                           image_url='resources/images/{}/{}'.format(user.username, filename), contact=contact)
-            # TODO: make this go for approval center.
             return make_response(view_items())
 
 

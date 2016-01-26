@@ -18,7 +18,6 @@
 <div class="container-fluid">
     <br class="row">
         <div class="col-md-12">
-
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
                     <div class="navbar-header">
@@ -31,7 +30,6 @@
                         </button>
                         <a class="navbar-brand" href="/">TAKARAM</a>
                     </div>
-
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <li class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
@@ -41,19 +39,15 @@
                             </li>
                         </ul>
                         {% if session['email'] %}
-
                         <ul class="nav navbar-nav">
                             <li>
-
                                 <a href="/user/items/view">My Items</a>
-
                             </li>
                         </ul>
                         <ul class="navbar-form navbar-left">
                             <div class="form-group">
                                 You are logged-in as: <span class="label label-default">{{ session['email'] }}</span>
                             </div>
-
                         </ul>
                         <ul class="navbar-form navbar-right">
                             <div class="form-group">
@@ -68,41 +62,31 @@
                                     <a href="/logout"><span class="label label-primary">Log Out</span></a>
                                 </h4>
                             </div>
-
                         </ul>
-
                         {% endif %}
                     </li>
                     {% if session['admin'] %}
+                    <nav class="navbar navbar-inverse">
                     <li class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
                         <ul class="nav navbar-nav">
-                            <div class="navbar-header">
-                                <a class="navbar-brand" href="#">
-                                    <span class="glyphicon glyphicon-cog"></span>
-                                </a>
-                            </div>
+
                             <li>
-                                <a href="/admin/dashboard">Dashboard <span class="sr-only">(current)</span>
+                                <a href="/admin/dashboard"><i class="fa fa-tachometer"></i> Dashboard <span class="sr-only">(current)</span>
                                 </a>
                             </li>
                         </ul>
-
-
                         <ul class="nav navbar-nav">
                             <li>
-
-                                <a href="/admin/pending/items">View Pending Items</a>
-
+                                <a href="/admin/pending/items"><i class="fa fa-envelope-o"></i> View Pending Items</a>
                             </li>
                             <li>
-
-                                <a href="/admin/list/users">View Users list</a>
-
+                                <a href="/admin/list/users"><i class="fa fa-users"></i> View Users list</a>
                             </li>
                         </ul>
 
 
                     </li>
+                        </nav>
                     {% endif %}
 
                 </div>
@@ -130,7 +114,12 @@
 
         {% endblock %}
     </div>
-</div>
+
+
+
+
+
+
 
 </body>
 {% if session['email'] %}

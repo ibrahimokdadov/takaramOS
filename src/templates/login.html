@@ -5,18 +5,34 @@
     {% if message is defined %}
     <h4 class="text-center"><span class="label label-danger">{{ message }}</span></h4>
     {% endif %}
-    <form id="login-form" action="/login" method="post">
-        <div class="form-group">
-            <label for="username_email">Email</label>
-            <input type="text" id="username_email" name="username_email" class="form-control" placeholder="Email@example.com">
+
+
+    <div class="row vertical-offset-100">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="panel panel-default form-signin">
+                <div class="panel-heading">
+                    <img src="http://s11.postimg.org/7kzgji28v/logo_sm_2_mr_1.png" class="center-block img-responsive"
+                         alt="Conxole Admin"/>
+                </div>
+                <div class="panel-body">
+
+                    <form id="login-form" action="/login" method="post">
+                        <div class="form-group">
+                            <label for="username_email">Email</label>
+                            <input type="text" id="username_email" name="username_email" class="form-control"
+                                   placeholder="Email@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" class="form-control">
+                        </div>
+                        <button type="submit" id="submit-button" class="btn btn-primary">Login</button>
+                        <h5>Not a member?<a href="/register"> Sign up</a></h5>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" class="form-control">
-        </div>
-        <button type="submit" id="submit-button" class="btn btn-primary">Login</button>
-        <h5>Not a member?<a href="/register" > Sign up</a></h5>
-    </form>
+    </div>
 </div>
 
 {% endblock %}
