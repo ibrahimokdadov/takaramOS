@@ -3,35 +3,52 @@
 <div class="container">
     <h4 class="text-center"><span id="msg" class="label label-danger"></span></h4>
     <div class="well">
-    {% if editable is defined %}
-    <h1 class="center-block"><a href="#" id="x-title" data-type="text" data-url="/user/item/update/title"
-                                data-pk="{{item._id}}" data-title="Change your title"> {{item.title}} </a> 's details
-    </h1>
-    {% else %}
-    <h1 class="center-block"> {{item.title}} details </h1>
-    {% endif %}
+        {% if editable is defined %}
+        <h1 class="center-block"><a href="#" id="x-title" data-type="text" data-url="/user/item/update/title"
+                                    data-pk="{{item._id}}" data-title="Change your title"> {{item.title}} </a> 's
+            details
+        </h1>
+        {% else %}
+        <h1 class="center-block"> {{item.title}} details </h1>
+        {% endif %}
 
-    {% if editable is defined %}
-    <p>Description: <a href="#" id="x-description" data-type="textarea" data-url="/user/item/update/description"
+        {% if editable is defined %}
+        <p>Description: <a href="#" id="x-description" data-type="textarea" data-url="/user/item/update/description"
+                           data-pk="{{item._id}}"
+                           data-title="Change your description">{{ item.description }}</a></p>
+        {% else %}
+        <p>Description: {{ item.description }}</p>
+        {% endif %}
+
+        <p>Date Posted: {{ item.date_posted|datetimeformat }}</p>
+
+        {% if editable is defined %}
+        <p>Contact: <a href="#" id="x-contact" data-type="text" data-url="/user/item/update/contact"
                        data-pk="{{item._id}}"
-                       data-title="Change your description">{{ item.description }}</a></p>
-    {% else %}
-    <p>Description: {{ item.description }}</p>
-    {% endif %}
-
-    <p>Date Posted: {{ item.date_posted|datetimeformat }}</p>
-
-    {% if editable is defined %}
-    <p>Contact: <a href="#" id="x-contact" data-type="text" data-url="/user/item/update/contact" data-pk="{{item._id}}"
-                   data-title="Change contact details">{{ item.contact }}</a></p>
-    {% else %}
-    <p>Contact: {{ item.contact }}</p>
-    {% endif %}
+                       data-title="Change contact details">{{ item.contact }}</a></p>
+        {% else %}
+        <p>Contact: {{ item.contact }}</p>
+        {% endif %}
     </div>
-    <a class="thumbnail" href="#">
 
+
+    {% if item.image_url|is_list %}
+    <div class="row">
+
+        {% for url in item.image_url %}
+        <div class="col-md-3 col-sm-4 col-xs-6">
+
+            <img class="img-rounded img-responsive" src="{{ url_for('static', filename='{}'.format( url)) }}">
+
+        </div>
+        {% endfor %}
+
+    </div>
+    {% else %}
+    <a class="thumbnail" href="/user/items/detail/{{item._id}}">
         <img class="img-rounded" src="{{ url_for('static', filename='{}'.format( item.image_url)) }}">
     </a>
+    {% endif %}
 
 
     <hr>
@@ -70,5 +87,7 @@ $(function() {
             }
         });
   });
+
+
 </script>
 {% endblock %}

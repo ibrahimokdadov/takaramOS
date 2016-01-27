@@ -48,7 +48,7 @@ def add_item():
             contact = request.form['contact']
             user = User.get_user_by_email(session['email'], UserConstants.COLLECTION)
             # Target folder for these uploads.
-            target = os.path.join(APP_ROOT, 'static/resources/images/{}'.format(user.username))
+            target = os.path.join(APP_ROOT, 'static/resources/images/{}/{}'.format(user.username, title))
             # target = './static/resources/{}'.format(upload_key)
             try:
                 if not os.path.isdir(target):
@@ -58,15 +58,17 @@ def add_item():
                 return render_template("message_center.html",
                                        message="System was not able to store uploaded file in server! Contact Admin.")
             filename = ''
+            images_path = []
             for upload in uploaded_file_list:
                 filename = upload.filename.rsplit("/")[0]
                 # TODO: Change this to be in Config File.
-                destination = os.path.join(APP_ROOT, 'static/resources/images/{}/{}'.format(user.username, filename))
+                destination = os.path.join(APP_ROOT,
+                                           'static/resources/images/{}/{}/{}'.format(user.username, title, filename))
+                images_path.append('resources/images/{}/{}/{}'.format(user.username, title, filename))
                 # destination = "/".join([target, filename])
-
                 upload.save(destination)
             user.add_item(title=title, description=description,
-                          image_url='resources/images/{}/{}'.format(user.username, filename), contact=contact)
+                          image_url=images_path, contact=contact)
             return make_response(view_items())
 
 
@@ -76,7 +78,6 @@ def item_details(item_id):
     if item is not None:
         if session.get('email') is not None:
             user = User.get_user_by_email(email=session['email'], collection=UserConstants.COLLECTION)
-
             if (user._id == item.user_id) or (session.get('admin') is not None):
                 return render_template("item_details.html", item=item, editable=True)
             else:
@@ -112,7 +113,8 @@ def edit_item(item_id, attribute_name, attribute_value):
             return render_template("item_details.html", item=item)
         else:
             item.update_item(attribute_name="approved", attribute_value=False)
-            return render_template("message_center.html", message="Item will published as soon as the change is approved")
+            return render_template("message_center.html",
+                                   message="Item will published as soon as the change is approved")
     else:
         return render_template("message_center.html",
                                message="Could not update Item {} . Contact Us if you need further information!".format(

@@ -34,6 +34,10 @@ def initialize_database():
 def datetimeformat(value, format='%d/%m/%Y @ %H:%M'):
     return value.strftime(format)
 
+@app.template_filter('is_list')
+def is_list(value):
+    return isinstance(value, list)
+
 
 @app.route('/')
 def home_page():

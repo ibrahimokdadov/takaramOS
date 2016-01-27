@@ -22,7 +22,27 @@
             </div>
             <p>Date Posted: {{ item.date_posted|datetimeformat }}</p>
             <p><b>Contact Information: {{ item.contact }}</b></p>
-            <img class="thumbnail img-rounded" src="{{ url_for('static', filename='{}'.format( item.image_url)) }}">
+            {% if item.image_url|is_list %}
+            {%set one_image = false%}
+            {% for url in item.image_url %}
+            {% if one_image == false%}
+            <div class="media">
+                <a class="thumbnail" href="/user/items/detail/{{item._id}}">
+                    <img class="img-rounded" src="{{ url_for('static', filename='{}'.format( url)) }}">
+                    <span class="badge badge-warning pull-right">{{item.image_url|length}}</span>
+                </a>
+            </div>
+            {%set one_image = true%}
+            {%endif%}
+            {% endfor %}
+
+            {% else %}
+            <div class="media">
+                <a class="thumbnail" href="/user/items/detail/{{item._id}}">
+                    <img class="img-rounded" src="{{ url_for('static', filename='{}'.format( item.image_url)) }}">
+                </a>
+            </div>
+            {% endif %}
             <p>Description: {{ item.description }}</p>
             <a class="label label-danger" href="/user/items/delete/{{item._id}}">Delete</a>
         </div>
