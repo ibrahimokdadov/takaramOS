@@ -23,7 +23,8 @@ This project is made using:
 * each users edits their own items
 * delete item
 * view items without loggin in
-* displays item details on click [shows only one image]
+* displays item details on click [shows multiple images]
+* displays badge for multiple images uploaded
 * add items does not show to unlogged in users
 * basic approval center for new items
 * logged in users can edit posts
@@ -35,8 +36,7 @@ This project is made using:
 * ability to search for items
 
 ###todos
-* add encryption to registration and logging in
-* add Multiple image gallery on detail view
+* add encryption to registration and logging in* 
 
 ###done
 * ~~add edit items~~
@@ -46,6 +46,7 @@ This project is made using:
   * ~~view basic statistics (number of items, number of user)~~* 
 * ~~verify each users edits their own items~~
 * ~~ability to search for items and in description~~
+* ~~add Multiple image gallery on detail view~~
 
 ###license
 MIT?
