@@ -36,7 +36,14 @@ This project is made using:
 * ability to search for items
 
 ###todos
-* add encryption to registration and logging in* 
+* add messaging system
+* add encryption to registration and logging in
+* add profiles to accounts
+* add profile image to accounts and navbar
+* add graphs showing new items each day
+* add graphs showing items last week
+* add graphs showing new registrations
+* add graphs showing registrations last week
 
 ###done
 * ~~add edit items~~
