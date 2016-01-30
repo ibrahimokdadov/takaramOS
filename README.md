@@ -36,6 +36,7 @@ This project is made using:
 * ability to search for items
 
 ###todos
+* add messaging system
 * add encryption to registration and logging in
 * add profiles to accounts
 * add profile image to accounts and navbar
