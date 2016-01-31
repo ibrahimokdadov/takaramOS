@@ -34,9 +34,9 @@ This project is made using:
  * view list of users
  * delete specific user
 * ability to search for items
+* messaging system to communicate with item owner from within the app.
 
 ###todos
-* add messaging system
 * add encryption to registration and logging in
 * add profiles to accounts
 * add profile image to accounts and navbar
@@ -54,6 +54,7 @@ This project is made using:
 * ~~verify each users edits their own items~~
 * ~~ability to search for items and in description~~
 * ~~add Multiple image gallery on detail view~~
+* ~~messaging system~~
 
 ###license
 MIT?
