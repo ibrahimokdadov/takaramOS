@@ -34,8 +34,8 @@ class Database(object):
         return Database.DB[collection].find(query).count()
 
     @staticmethod
-    def find_one(collection, query):
-        return Database.DB[collection].find_one(query)
+    def find_one(collection, query, projection=None):
+        return Database.DB[collection].find_one(query, projection)
 
     @staticmethod
     def find_or(collection, query):

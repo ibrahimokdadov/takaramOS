@@ -51,6 +51,26 @@
     {% endif %}
 
 
+    <h1>Contact owner:</h1>
+    <div class="well">
+        <form id="new-message-form" action="/user/messages/add/{{item._id}}" method="post" >
+        {% if err_message is defined %}
+        <h4 class="text-center"><span class="label label-danger">{{ err_message }}</span></h4>
+        {% endif %}
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" class="form-control" placeholder="Example: Ice Age">
+        </div>
+        <div class="form-group">
+            <label for="content">content</label>
+            <textarea type="text" id="content" name="content" class="form-control"></textarea>
+        </div>
+
+
+        <button type="submit" id="submit-button" class="btn btn-primary">Add message</button>
+        </form>
+    </div>
+
     <hr>
 
 </div>

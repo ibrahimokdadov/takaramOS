@@ -26,3 +26,5 @@ background-color: #269abc;
 .badge-inverse {
 background-color: #333333;
 }
+
+a.list-group-item.read { color: #222;background-color: #F3F3F3; }

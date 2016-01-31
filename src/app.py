@@ -6,6 +6,7 @@ from src.models.admins.admin import Admin
 from src.models.admins.views import admin_blueprints
 from src.models.items.item import Item
 from src.models.items.views import item_blueprints, view_items
+from src.models.messages.views import message_blueprints
 from src.models.users.user import User
 import src.models.admins.constants as AdminConstants
 import src.models.users.constants as UserConstants
@@ -23,7 +24,7 @@ APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 app.register_blueprint(item_blueprints)
 app.register_blueprint(admin_blueprints)
 app.register_blueprint(user_blueprints)
-
+app.register_blueprint(message_blueprints)
 
 @app.before_first_request
 def initialize_database():

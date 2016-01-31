@@ -51,6 +51,12 @@ class Item(object):
             return cls(**item)
 
     @classmethod
+    def get_user_id(cls, item_id):
+        user_id = Database.find_one(ItemConstants.COLLECTION, {"_id":item_id},{"_id":0, "user_id":1})
+        if user_id is not None:
+            return user_id
+
+    @classmethod
     def get_all_items(cls):
         items = Database.find(ItemConstants.COLLECTION, {})
         if items is not None:

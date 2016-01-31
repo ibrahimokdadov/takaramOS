@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="row well">
+        <div class="col-sm-3 col-md-2">
+
+        </div>
+        <div class="col-sm-9 col-md-10">
+
+
+        </div>
+    </div>
+    <hr>
+    <div class="row well">
+        <div class="col-sm-3 col-md-2">
+
+            <hr>
+            <ul class="nav nav-pills nav-stacked">
+
+                <li><a href="/user/messages/recieved/{{session['email']}}">Recieved Mail</a></li>
+                <li class="active"><a href="/user/messages/sent/{{session['email']}}">Sent Mail</a></li>
+                <a href="#" class="btn btn-danger btn-sm btn-block" role="button"><i class="glyphicon glyphicon-edit"></i>
+                Delete ALL</a>
+            </ul>
+        </div>
+        <div class="col-sm-9 col-md-10">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#home" data-toggle="tab"><span class="glyphicon glyphicon-inbox">
+                </span>Primary</a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="home">
+                    <div class="list-group">
+                        {% if messages|length > 0 %}
+                        {%for message in messages%}
+                            {% if message.is_read == true%}
+                            <a href="/user/message/details/{{message._id}}" class="list-group-item ">
+                            {% else %}
+                            <a href="/user/message/details/{{message._id}}" class="list-group-item ">
+                            {% endif %}
+                                <span class="">{{message.title}}</span>
+                                <span class="text-muted" style="font-size: 11px;">- More content here</span>
+                                <span class="badge">{{message.date_posted}}</span>
+                                <span class="pull-right">
+                                    <span class="glyphicon glyphicon-paperclip"></span>
+                                </span>
+                            </a>
+                        {% endfor %}
+                        {% else %}
+                        No messages yet.
+                        {% endif %}
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

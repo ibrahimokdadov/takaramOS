@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h4 class="text-center"><span id="msg" class="label label-danger"></span></h4>
+    {% if err_message is defined %}
+    <h4 class="text-center"><span class="label label-danger">{{ err_message }}</span></h4>
+    {% endif %}
+    <div class="well">
+        {% set first_time = 1 %}
+        {% for message in messages %}
+        {% if first_time == 1 %}
+        <h1 class="center-block"> {{message.title}} details </h1>
+        {% set first_time = 2 %}
+        {% else %}
+        {% if first_time == 2 %}
+        <h1>Replies:</h1>
+        {% set first_time = 0 %}
+        {%endif%}
+        {%endif%}
+        <h3 class="text-muted" style="font-size: 13px;">
+        {% if message.sender_id == user_id %}
+
+         <i class="fa fa-arrow-left" style="color:red"></i> Message <b>from you</b>
+        {% else %}
+        <i class="fa fa-arrow-right" style="color:green"></i> Message <b>from {{message.sender_username}}</b> to you
+        {% endif %}
+         on {{ message.date_posted|datetimeformat }} </h3>
+        <p>- {{ message.content }}</p>
+        {% endfor %}
+
+    </div>
+    <hr>
+    <div class="well">
+    <h2>Reply:</h2>
+
+    <form id="new-reply-form" action="/user/message/reply/{{item._id}}" method="post" enctype="multipart/form-data">
+
+
+        <div class="form-group">
+            <label for="content">content</label>
+            <textarea type="text" id="content" name="content" class="form-control"></textarea>
+        </div>
+
+
+        <button type="submit" id="submit-button" class="btn btn-primary">Add reply</button>
+    </form>
+    </div>
+
+    <div class="well">
+        <h2>This communication is happening because of:</h2>
+
+        <h3>{{item.title}}</h3>
+        {% if item.image_url|is_list %}
+        <div class="row">
+            {% for url in item.image_url %}
+            <div class="col-md-3 col-sm-4 col-xs-6">
+                <img class="img-rounded img-responsive" src="{{ url_for('static', filename='{}'.format( url)) }}">
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <a class="thumbnail" href="/user/items/detail/{{item._id}}">
+            <img class="img-rounded" src="{{ url_for('static', filename='{}'.format( item.image_url)) }}">
+        </a>
+        {% endif %}
+    </div>
+    <hr>
+</div>
+
+
+{% endblock %}
