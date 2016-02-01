@@ -8,7 +8,7 @@ This version is the alpha version many features are missing. Hopefully I will be
 ![alt tag](https://github.com/ibininja/takaramOS/blob/master/src/static/assets/takaramOS.png?raw=true)
 
 ###version
-0.1
+0.2
 
 ###technicalilites
 This project is made using:
@@ -35,6 +35,8 @@ This project is made using:
  * delete specific user
 * ability to search for items
 * messaging system to communicate with item owner from within the app.
+ * send and recieve message about posted items
+ * notifications for new unread messages.
 
 ###todos
 * add encryption to registration and logging in
