@@ -15,7 +15,24 @@
 
             <hr>
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="/user/messages/recieved/{{session['email']}}"><span class="badge pull-right">#</span>Recieved Mail</a></li>
+                <li class="active"><a href="/user/messages/recieved/{{session['email']}}">
+                    {% if unread_messages_count == 0 %}
+                        {% for key, value in unread_replies.items() %}
+                            {% if value > 0%}
+                            <span class="badge pull-right">
+                            <i class="fa fa-asterisk"></i>
+                            </span>
+                            {%endif%}
+                        {% endfor %}
+                    {% else %}
+                    <span class="badge pull-right">
+                        {{unread_messages_count}}
+                    </span>
+                    {% endif %}
+
+                Recieved Mail</a></li>
+
+
                 <li><a href="/user/messages/sent/{{session['email']}}">Sent Mail</a></li>
                 <a href="#" class="btn btn-danger btn-sm btn-block" role="button"><i class="glyphicon glyphicon-edit"></i>
                 Delete ALL</a>
@@ -39,7 +56,7 @@
                             <a href="/user/message/details/{{message._id}}" class="list-group-item ">
                             {% endif %}
                                 <span class="">{{message.title}}</span>
-                                <span class="text-muted" style="font-size: 11px;">- More content here</span>
+                                <span class="text-muted" style="font-size: 11px;">- {{unread_replies[message._id]}} unread replies</span>
                                 <span class="badge">{{message.date_posted}}</span>
                                 <span class="pull-right">
                                     <span class="glyphicon glyphicon-paperclip"></span>

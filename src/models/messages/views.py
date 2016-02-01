@@ -36,7 +36,14 @@ def get_recieved_messages(user_email):
             user = User.get_user_by_email(collection=UserConstants.COLLECTION, email=user_email)
             if user is not None:
                 messages = Message.get_recieved_messages_by_user_id(user._id)
-                return render_template("user/messages/recieved_messages.html", user_id=user._id, messages=messages)
+                unread_messages_count = Message.get_unread_recieved_messages_count(user._id)
+                unread_replies_list = {}
+                for message in messages:
+                    unread_replies_list[message._id] = message.get_unread_recieved_replies_count(user_id=user._id,
+                                                                                                 item_id=message.item_id)
+                print(unread_replies_list)
+                return render_template("user/messages/recieved_messages.html", user_id=user._id, messages=messages,
+                                       unread_messages_count=unread_messages_count, unread_replies=unread_replies_list)
             else:
                 return render_template("message_center.html", message="Could not locate user")
         else:
@@ -54,9 +61,12 @@ def get_message_details(message_id):
         if message is not None:
             user = User.get_user_by_email(collection=UserConstants.COLLECTION, email=session['email'])
             if (user._id == message.sender_id) or (user._id == message.recipient_id):
+                if (user._id == message.recipient_id):
+                    message.mark_massage_read()
                 item = Item.get_item_by_id(message.item_id)
                 messages = Message.get_messages_by_item_id(message.item_id)
-                return render_template("user/messages/message_details.html", user_id=user._id, messages=messages, item=item)
+                return render_template("user/messages/message_details.html", user_id=user._id, messages=messages,
+                                       item=item)
             else:
                 return render_template("message_center.html",
                                        message="you are not allowed to view details of this message")

@@ -74,3 +74,23 @@ class Message(object):
         messages = Database.find(MessageConstants.COLLECTION, {"recipient_id": user_id, "parent_id": None})
         if messages is not None:
             return [cls(**message) for message in messages]
+
+    @classmethod
+    def get_unread_recieved_messages_count(cls, user_id):
+        count = Database.find(MessageConstants.COLLECTION, {"recipient_id":user_id, "is_read":False, "parent_id":None}).count()
+        return count
+
+    @classmethod
+    def get_unread_recieved_replies_count(cls, user_id, item_id):
+        count = Database.find(MessageConstants.COLLECTION, {"recipient_id":user_id, "item_id":item_id, "is_read":False, "parent_id":{"$ne":None}}).count()
+        print(count)
+        return count
+
+    @classmethod
+    def get_unread_recieved_replies(cls, user_id):
+        replies = Database.find(MessageConstants.COLLECTION, {"recipient_id":user_id, "is_read":False, "parent_id":{"$ne":None}})
+        if replies is not None:
+            return [cls(**reply) for reply in replies]
+
+    def mark_massage_read(self):
+        Database.update_one(MessageConstants.COLLECTION, {"_id":self._id}, {"$set":{"is_read":True}})
