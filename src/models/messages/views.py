@@ -19,7 +19,18 @@ def get_sent_messages(user_email):
             user = User.get_user_by_email(collection=UserConstants.COLLECTION, email=user_email)
             if user is not None:
                 messages = Message.get_sent_messages_by_user_id(user._id)
-                return render_template("user/messages/sent_messages.html", user_id=user._id, messages=messages)
+                recieved_messages = Message.get_recieved_messages_by_user_id(user._id)
+                unread_recieved_messages_count = 0
+                for recieved_message in recieved_messages:
+                    unread_recieved_messages_count += Message.get_unread_recieved_replies_count(user_id=recieved_message.sender_id, item_id=recieved_message.item_id)
+                unread_replies_list = {}
+                for message in messages:
+                    unread_replies_list[message._id] = Message.get_unread_recieved_replies_count(user_id=user._id,
+                                                                                                 item_id=message.item_id)
+
+                return render_template("user/messages/sent_messages.html", user_id=user._id, messages=messages,
+                                       unread_replies=unread_replies_list,
+                                       unread_recieved_messages_count=unread_recieved_messages_count)
             else:
                 return render_template("message_center.html", message="Could not locate user")
         else:
@@ -37,13 +48,18 @@ def get_recieved_messages(user_email):
             if user is not None:
                 messages = Message.get_recieved_messages_by_user_id(user._id)
                 unread_messages_count = Message.get_unread_recieved_messages_count(user._id)
+                sent_messages = Message.get_sent_messages_by_user_id(user._id)
+                unread_sent_messages_count = 0
+                for sent_message in sent_messages:
+                    unread_sent_messages_count += Message.get_unread_sent_messages_count(user_id=sent_message.sender_id,
+                                                                                         item_id=sent_message.item_id)
                 unread_replies_list = {}
                 for message in messages:
                     unread_replies_list[message._id] = message.get_unread_recieved_replies_count(user_id=user._id,
                                                                                                  item_id=message.item_id)
-                print(unread_replies_list)
                 return render_template("user/messages/recieved_messages.html", user_id=user._id, messages=messages,
-                                       unread_messages_count=unread_messages_count, unread_replies=unread_replies_list)
+                                       unread_messages_count=unread_messages_count, unread_replies=unread_replies_list,
+                                       unread_sent_messages_count=unread_sent_messages_count)
             else:
                 return render_template("message_center.html", message="Could not locate user")
         else:
@@ -65,6 +81,11 @@ def get_message_details(message_id):
                     message.mark_massage_read()
                 item = Item.get_item_by_id(message.item_id)
                 messages = Message.get_messages_by_item_id(message.item_id)
+                for reply in messages:
+                    if (user._id == reply.recipient_id):
+                        print("reciever", reply.title)
+                        reply.mark_massage_read()
+
                 return render_template("user/messages/message_details.html", user_id=user._id, messages=messages,
                                        item=item)
             else:

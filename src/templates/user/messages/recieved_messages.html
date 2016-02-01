@@ -17,25 +17,27 @@
             <ul class="nav nav-pills nav-stacked">
                 <li class="active"><a href="/user/messages/recieved/{{session['email']}}">
                     {% if unread_messages_count == 0 %}
-                        {% for key, value in unread_replies.items() %}
-                            {% if value > 0%}
-                            <span class="badge pull-right">
+                    {% for key, value in unread_replies.items() %}
+                    {% if value > 0%}
+                            <span class="badge badge-success pull-right">
                             <i class="fa fa-asterisk"></i>
                             </span>
-                            {%endif%}
-                        {% endfor %}
+                    {%endif%}
+                    {% endfor %}
                     {% else %}
-                    <span class="badge pull-right">
+                    <span class="badge badge-success pull-right">
                         {{unread_messages_count}}
                     </span>
                     {% endif %}
 
-                Recieved Mail</a></li>
+                    Recieved Mail</a></li>
 
 
-                <li><a href="/user/messages/sent/{{session['email']}}">Sent Mail</a></li>
-                <a href="#" class="btn btn-danger btn-sm btn-block" role="button"><i class="glyphicon glyphicon-edit"></i>
-                Delete ALL</a>
+                <li><a href="/user/messages/sent/{{session['email']}}">Sent Mail <span
+                        class="badge badge-warning pull-right">{{unread_sent_messages_count}}</span></a></li>
+                <a href="#" class="btn btn-danger btn-sm btn-block" role="button"><i
+                        class="glyphicon glyphicon-edit"></i>
+                    Delete ALL</a>
             </ul>
         </div>
         <div class="col-sm-9 col-md-10">
@@ -50,11 +52,11 @@
                     <div class="list-group">
                         {% if messages|length > 0 %}
                         {%for message in messages%}
-                            {% if message.is_read == true%}
-                            <a href="/user/message/details/{{message._id}}" class="list-group-item ">
+                        {% if message.is_read == true%}
+                        <a href="/user/message/details/{{message._id}}" class="list-group-item ">
                             {% else %}
                             <a href="/user/message/details/{{message._id}}" class="list-group-item ">
-                            {% endif %}
+                                {% endif %}
                                 <span class="">{{message.title}}</span>
                                 <span class="text-muted" style="font-size: 11px;">- {{unread_replies[message._id]}} unread replies</span>
                                 <span class="badge">{{message.date_posted}}</span>
@@ -62,10 +64,10 @@
                                     <span class="glyphicon glyphicon-paperclip"></span>
                                 </span>
                             </a>
-                        {% endfor %}
-                        {% else %}
-                        No messages yet.
-                        {% endif %}
+                            {% endfor %}
+                            {% else %}
+                            No messages yet.
+                            {% endif %}
                     </div>
                 </div>
 

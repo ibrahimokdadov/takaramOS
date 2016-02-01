@@ -83,7 +83,11 @@ class Message(object):
     @classmethod
     def get_unread_recieved_replies_count(cls, user_id, item_id):
         count = Database.find(MessageConstants.COLLECTION, {"recipient_id":user_id, "item_id":item_id, "is_read":False, "parent_id":{"$ne":None}}).count()
-        print(count)
+        return count
+
+    @classmethod
+    def get_unread_sent_messages_count(cls, user_id, item_id ):
+        count = Database.find(MessageConstants.COLLECTION, {"recipient_id":user_id, "is_read":False, "item_id":item_id, "parent_id":{"$ne":None}}).count()
         return count
 
     @classmethod
