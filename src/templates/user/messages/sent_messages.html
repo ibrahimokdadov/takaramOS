@@ -15,7 +15,7 @@
             <hr>
             <ul class="nav nav-pills nav-stacked">
 
-                <li><a href="/user/messages/recieved/{{session['email']}}">Recieved Mail
+                <li><a href="/user/messages/recieved/{{session['email']}}"><i class="glyphicon glyphicon-envelope"></i> Recieved Mail
                     {%if unread_recieved_messages_count > 0 %}
                     <span class="badge badge-success pull-right">
                     <i class="fa fa-asterisk"></i>
@@ -41,13 +41,11 @@
                     {% endfor %}
 
 
-                    Sent Mail</a></li>
-                <a href="#" class="btn btn-danger btn-sm btn-block" role="button"><i
-                        class="glyphicon glyphicon-edit"></i>
-                    Delete ALL</a>
+                    <i class="glyphicon glyphicon-send"></i> Sent Mail</a></li>
+                <li> <a href="#"><i class="glyphicon glyphicon-trash"></i> Delete ALL</a></li>
             </ul>
         </div>
-        <div class="col-sm-9 col-md-10">
+        <div class="col-sm-9 col-md-10 default-blue" style="padding-top:10px">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#home" data-toggle="tab"><span class="glyphicon glyphicon-inbox">
@@ -60,13 +58,13 @@
                         {% if messages|length > 0 %}
                         {%for message in messages%}
                         {% if message.is_read == true%}
-                        <a href="/user/message/details/{{message._id}}" class="list-group-item ">
+                        <a href="/user/message/details/{{message._id}}" class="list-group-item read">
                             {% else %}
                             <a href="/user/message/details/{{message._id}}" class="list-group-item ">
                                 {% endif %}
                                 <span class="">{{message.title}}</span>
                                 <span class="text-muted" style="font-size: 11px;">- {{unread_replies[message._id]}} unread replies</span>
-                                <span class="badge">{{message.date_posted}}</span>
+                                <span class="badge">{{message.date_posted|datetimeformat}}</span>
                                 <span class="pull-right">
                                     <span class="glyphicon glyphicon-paperclip"></span>
                                 </span>
