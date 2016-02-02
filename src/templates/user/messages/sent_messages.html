@@ -2,6 +2,12 @@
 {% block content %}
 <div class="container">
     <hr>
+    <ol class="breadcrumb">
+        <li><a href="#">home</a></li>
+        <li><a href="#">messages</a></li>
+        <li class="active"><a href="active">sent messages</a></li>
+    </ol>
+    <hr>
     <div class="row well">
         <span class="row ">
 
@@ -15,7 +21,8 @@
             <hr>
             <ul class="nav nav-pills nav-stacked">
 
-                <li><a href="/user/messages/recieved/{{session['email']}}"><i class="glyphicon glyphicon-envelope"></i> Recieved Mail
+                <li><a href="/user/messages/recieved/{{session['email']}}"><i class="glyphicon glyphicon-envelope"></i>
+                    Recieved Mail
                     {%if unread_recieved_messages_count > 0 %}
                     <span class="badge badge-success pull-right">
                     <i class="fa fa-asterisk"></i>
@@ -42,7 +49,7 @@
 
 
                     <i class="glyphicon glyphicon-send"></i> Sent Mail</a></li>
-                <li> <a href="#"><i class="glyphicon glyphicon-trash"></i> Delete ALL</a></li>
+                <li><a href="#"><i class="glyphicon glyphicon-trash"></i> Delete ALL</a></li>
             </ul>
         </div>
         <div class="col-sm-9 col-md-10 default-blue" style="padding-top:10px">

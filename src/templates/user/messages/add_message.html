@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container">
-    <h1 class="center-block"><span class="glyphicon glyphicon-plus-sign"></span> Add new item </h1>
+    <h1 class="center-block"><span class="glyphicon glyphicon-plus-sign"></span> Add new message </h1>
     <form id="new-movie-form" action="/user/messages/add/{{item_id}}" method="post" enctype="multipart/form-data">
         {% if err_message is defined %}
         <h4 class="text-center"><span class="label label-danger">{{ err_message }}</span></h4>

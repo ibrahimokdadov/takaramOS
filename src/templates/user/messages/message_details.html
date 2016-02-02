@@ -5,6 +5,13 @@
     {% if err_message is defined %}
     <h4 class="text-center"><span class="label label-danger">{{ err_message }}</span></h4>
     {% endif %}
+    <hr>
+    <ol class="breadcrumb">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">{{message.title}}</a></li>
+        <li class="active"><a href="active">Details</a></li>
+    </ol>
+    <hr>
     <div class="well">
         {% set first_time = 1 %}
         {% for message in messages %}
@@ -18,32 +25,32 @@
         {%endif%}
         {%endif%}
         <h3 class="text-muted" style="font-size: 13px;">
-        {% if message.sender_id == user_id %}
+            {% if message.sender_id == user_id %}
 
-         <i class="fa fa-arrow-left" style="color:red"></i> Message <b>from you</b>
-        {% else %}
-        <i class="fa fa-arrow-right" style="color:green"></i> Message <b>from {{message.sender_username}}</b> to you
-        {% endif %}
-         on {{ message.date_posted|datetimeformat }} </h3>
+            <i class="fa fa-arrow-left" style="color:red"></i> Message <b>from you</b>
+            {% else %}
+            <i class="fa fa-arrow-right" style="color:green"></i> Message <b>from {{message.sender_username}}</b> to you
+            {% endif %}
+            on {{ message.date_posted|datetimeformat }} </h3>
         <p>- {{ message.content }}</p>
         {% endfor %}
 
     </div>
     <hr>
     <div class="well">
-    <h2>Reply:</h2>
+        <h2>Reply:</h2>
 
-    <form id="new-reply-form" action="/user/message/reply/{{item._id}}" method="post" enctype="multipart/form-data">
-
-
-        <div class="form-group">
-            <label for="content">content</label>
-            <textarea type="text" id="content" name="content" class="form-control"></textarea>
-        </div>
+        <form id="new-reply-form" action="/user/message/reply/{{item._id}}" method="post" enctype="multipart/form-data">
 
 
-        <button type="submit" id="submit-button" class="btn btn-primary">Add reply</button>
-    </form>
+            <div class="form-group">
+                <label for="content">content</label>
+                <textarea type="text" id="content" name="content" class="form-control"></textarea>
+            </div>
+
+
+            <button type="submit" id="submit-button" class="btn btn-primary">Add reply</button>
+        </form>
     </div>
 
     <div class="well">

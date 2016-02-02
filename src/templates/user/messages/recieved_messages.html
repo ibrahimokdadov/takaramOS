@@ -3,6 +3,12 @@
 <div class="container">
 
     <hr>
+    <ol class="breadcrumb">
+        <li><a href="#">home</a></li>
+        <li><a href="#">messages</a></li>
+        <li class="active"><a href="active">recieved messages</a></li>
+    </ol>
+    <hr>
     <div class="row well">
         <span class="row ">
 
@@ -10,7 +16,7 @@
             <span class="text-muted" style="font-size: 11px;">{{session['email']}}</span>
 
         <hr>
-        <div class="col-sm-3 col-md-2" >
+        <div class="col-sm-3 col-md-2">
 
             <hr>
             <ul class="nav nav-pills nav-stacked ">
@@ -32,10 +38,11 @@
                     <i class="glyphicon glyphicon-envelope"></i> Recieved Mail</a></li>
 
 
-                <li><a href="/user/messages/sent/{{session['email']}}"><i class="glyphicon glyphicon-send"></i> Sent Mail <span
-                        class="badge badge-warning pull-right">{{unread_sent_messages_count}}</span></a></li>
+                <li><a href="/user/messages/sent/{{session['email']}}"><i class="glyphicon glyphicon-send"></i> Sent
+                    Mail <span
+                            class="badge badge-warning pull-right">{{unread_sent_messages_count}}</span></a></li>
 
-                <li> <a href="#"><i class="glyphicon glyphicon-trash"></i> Delete ALL</a></li>
+                <li><a href="#"><i class="glyphicon glyphicon-trash"></i> Delete ALL</a></li>
 
 
             </ul>

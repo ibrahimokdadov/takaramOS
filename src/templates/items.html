@@ -12,6 +12,11 @@
     </a>
 </div>
 <hr>
+<ol class="breadcrumb">
+  <li><a href="#">home</a></li>
+  <li class="active"><a href="#">my items</a></li>
+</ol>
+<hr>
 <section id="pinBoot">
     {% if items|length > 0 %}
     {% for item in items | sort(True, attribute='date_posted') %}

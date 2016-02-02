@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container">
+    <hr>
+    <ol class="breadcrumb">
+        <li><a href="#">home</a></li>
+        <li class="active"><a href="active">add item</a></li>
+    </ol>
+    <hr>
     <h1 class="center-block"><span class="glyphicon glyphicon-plus-sign"></span> Add new item </h1>
     <form id="new-movie-form" action="/user/items/add" method="post" enctype="multipart/form-data">
         {% if message is defined %}

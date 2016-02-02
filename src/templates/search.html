@@ -10,10 +10,15 @@
 
 </div>
 <hr>
+<ol class="breadcrumb">
+    <li><a href="#">home</a></li>
+    <li class="active"><a href="active">search</a></li>
+</ol>
+<hr>
 <section id="pinBoot">
     {% if results|length > 0 %}
     {% for result in results | sort(True, attribute='date_posted') %}
-        <article class="white-panel">
+    <article class="white-panel">
         <div class="thumbnail">
             <div class="well">
                 <a href="/user/items/detail/{{result._id}}"><h3>{{ result.title }}</h3></a>
@@ -25,11 +30,12 @@
 
         </div>
 
-        <hr></article>
+        <hr>
+    </article>
     {% endfor %}
 </section>
-    {% else %}
-    <h4>Could not find anything that matches..</h4>
-    {% endif %}
+{% else %}
+<h4>Could not find anything that matches..</h4>
+{% endif %}
 
 {% endblock %}
