@@ -8,7 +8,7 @@
     <h4 class="text-center"><span class="label label-danger">{{ message }}</span></h4>
     {% endif %}
     <a href="/user/items/add">
-        <button class="center-block btn btn-success">Add Item</button>
+        <button class="center-block btn btn-success"><i class="fa fa-plus"></i> add item</button>
     </a>
 </div>
 <hr>
@@ -49,7 +49,7 @@
             </div>
             {% endif %}
             <p>Description: {{ item.description }}</p>
-            <a class="label label-danger" href="/user/items/delete/{{item._id}}">Delete</a>
+            <a class="label label-danger" href="/user/items/delete/{{item._id}}"><i class="fa fa-trash-o"></i> delete</a>
         </div>
         <hr>
     </article>
