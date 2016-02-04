@@ -51,9 +51,14 @@
 
     </div>
     {% else %}
+    <div class="row center-block">
+    <div class="col-md-3 col-sm-4 col-xs-6">
     <a class="thumbnail" href="/user/items/detail/{{item._id}}">
         <img class="img-rounded" src="{{ url_for('static', filename='{}'.format( item.image_url)) }}">
     </a>
+    </div>
+        </div>
+    <hr>
     {% endif %}
 
 
