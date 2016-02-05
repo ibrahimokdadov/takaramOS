@@ -1,3 +1,5 @@
+import json
+from bson import json_util
 from flask import Blueprint, session, render_template, make_response
 
 from src.models.admins.admin import Admin
@@ -31,8 +33,19 @@ def dashboard():
             users_count = admin.get_number_of_users()
             return render_template("admin/dashboard.html", items_count=items_count,
                                    approved_items_count=approved_items_count, pending_items_count=pending_items_count,
-                                   users_count=users_count)
+                                   users_count=users_count, )
 
+@admin_blueprints.route('/admin/dashboard/ditems')
+def get_item_per_day():
+    #TODO: add authentication
+    items_json = []
+    item_counts_day = Item.get_this_week_items()
+    for item in item_counts_day:
+        items_json.append(item)
+    print(items_json)
+    items_json=json_util.dumps(items_json, default=json_util.default)
+    print(items_json)
+    return items_json
 
 @admin_blueprints.route('/admin/pending/items')
 def pending_items():
@@ -61,3 +74,5 @@ def approve_item(item_id):
         return make_response(pending_items())
     else:
         return render_template("login.html", message="System could not detect rights to access this area.")
+
+

@@ -64,3 +64,7 @@ class Database(object):
     @staticmethod
     def update_one(collection, query, setquery):
         return Database.DB[collection].update(query, setquery)
+
+    @staticmethod
+    def aggregate(collection, query):
+        return Database.DB[collection].aggregate(query, cursor={})

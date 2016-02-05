@@ -87,3 +87,8 @@ class Item(object):
                                 {"approved": True, "$text": {"$search": words}})
         if results is not None:
             return [cls(**result) for result in results]
+
+    @classmethod
+    def get_this_week_items(cls):
+        items = Database.aggregate(ItemConstants.COLLECTION, [{"$group":{"_id":"$date_posted", "count":{"$sum":1}}}])
+        return items
