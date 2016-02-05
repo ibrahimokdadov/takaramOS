@@ -16,6 +16,7 @@ This project is made using:
 * mongoDB
 * bootstrap
 * x-editable
+* d3.js
 
 ###current features
 * register and signup
