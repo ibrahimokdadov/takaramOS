@@ -17,6 +17,8 @@ This project is made using:
 * bootstrap
 * x-editable
 * d3.js
+* dc.js
+* crossfilter.js
 
 ###current features
 * register and signup
