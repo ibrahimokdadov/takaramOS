@@ -5,33 +5,43 @@ function makeGraphs(error, ditemsJson){
 console.log(ditemsJson);
 var ditems = ditemsJson;
 var dateFormat = d3.time.format("%Y-%m-%d %H:%M:%S");
+
+//Get items returned- number of days where posting happened
+//var x = crossfilter(ditems);
+//var n = x.groupAll().reduceCount().value();
+//console.log("There are " + n + " days returned.");
+
+
 ditems.forEach(function(d) {
 
-    var datetemp = new Date(d['_id']['$date'])
-    d["date_posted"] = datetemp; //_id is the date_posted from json returned
-    d["date_posted"].setDate(1);
+    d["date_posted"] = new Date(d['_id']['$date']); //_id is the date_posted from json returned
     d["total_items"] = +d["count"];
+
+
 });
 
 //Create a Crossfilter instance
 	var ndx = crossfilter(ditems);
 
 //Define Dimensions
-	var dateDim = ndx.dimension(function(d) {
-	var temp = d['_id']
-    var datetemp = new Date(temp['$date'])
-	return datetemp;
-	});
+	var dateDim = ndx.dimension(function(d) {return new Date(d['_id']['$date']);	});
     var totalItemsDim  = ndx.dimension(function(d) { return d["count"]; });
 
 //Calculate metrics
-	var numItemsByDate = dateDim.group();
-	var totalItemsByDate = dateDim.group().reduceSum(function(d) {
+	var entriesInGroup = dateDim.group();
+	
+//	tolEntries = entriesInGroup.size()
+//	console.log("total entries "+tolEntries+" Numer of items by date dateDim.group() " + entriesInGroup.top(tolEntries)[0].value)
+
+
+	var sumOfEntries = dateDim.group().reduceSum(function(d) {
 		return d["count"];
 	});
+	//console.log("Sum of items by date total.group() " + sumOfEntries.top(4)[0].value)
 
 	var all = ndx.groupAll();
 	var totalItems = ndx.groupAll().reduceSum(function(d) {return d["count"];});
+    //console.log ("Sum of items count " + totalItems.value)
 
 	//Define values (to be used in charts)
 	var minDate = dateDim.bottom(1)[0]["_id"]['$date'];
@@ -53,18 +63,20 @@ ditems.forEach(function(d) {
 		.formatNumber(d3.format(".3s"));
 
 	timeChart
-		.width(600)
-		.height(160)
+		.width(500)
+		.height(200)
 		.margins({top: 10, right: 50, bottom: 30, left: 50})
 		.dimension(dateDim)
-		.group(numItemsByDate)
+		.group(sumOfEntries)
 		.transitionDuration(500)
 		.x(d3.time.scale().domain([minDate, maxDate]))
 		.elasticY(true)
-		.xAxisLabel("Year")
+		.xAxisLabel("Period")
 		.yAxis().ticks(4);
-        timeChart.xAxis().ticks(5);
+        timeChart.xAxis().ticks(6);
 		//timeChart.xAxis().ticks(5).tickFormat(function (v) { var monthNameFormat = d3.time.format("%A"); return monthNameFormat(new Date(v));  });
+
+
 
 
 		   dc.renderAll();
