@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <link src="{{ url_for('static', filename='css/dc.css')}}">
+<link src="{{ url_for('static', filename='css/graphs.css')}}">
 <div class="container form-width">
     <div class="panel panel-primary">
         <div class="panel-heading">
@@ -66,6 +67,14 @@
                         </div>
 
                     </div>
+                    <hr>
+
+                    <div class='row'>
+                        <div class='span12' id='dc-time-chart'>
+                          <h4>Events per hour</h4>
+                        </div>
+                      </div>
+
                     <hr>
                     <div class="row">
                         <div class="col-md-4">

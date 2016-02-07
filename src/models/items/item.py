@@ -89,6 +89,6 @@ class Item(object):
             return [cls(**result) for result in results]
 
     @classmethod
-    def get_this_week_items(cls):
-        items = Database.aggregate(ItemConstants.COLLECTION, [{"$group":{"_id":"$date_posted", "count":{"$sum":1}}}])
+    def get_posted_items_count(cls):
+        items = Database.aggregate(ItemConstants.COLLECTION, [{"$group":{"_id":"$date_posted", "count":{"$sum":1}}}, {"$sort":{"_id":1}}])
         return items

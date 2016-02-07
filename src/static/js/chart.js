@@ -22,10 +22,16 @@ ditems.forEach(function(d) {
 
 //Create a Crossfilter instance
 	var ndx = crossfilter(ditems);
+	//var facts = crossfilter(ditems); //same as above different naming.
 
 //Define Dimensions
 	var dateDim = ndx.dimension(function(d) {return new Date(d['_id']['$date']);	});
     var totalItemsDim  = ndx.dimension(function(d) { return d["count"]; });
+
+    var volumeByHour = ndx.dimension(function(d) {
+      var day_temp = new Date(d['_id']['$date']);
+      return day_temp.getDate();
+        });
 
 //Calculate metrics
 	var entriesInGroup = dateDim.group();
@@ -39,6 +45,11 @@ ditems.forEach(function(d) {
 	});
 	//console.log("Sum of items by date total.group() " + sumOfEntries.top(4)[0].value)
 
+     var volumeByHourGroup = volumeByHour.group().reduceCount(function(d) {
+     var day_temp = new Date(d['_id']['$date']);
+     return day_temp; });
+
+
 	var all = ndx.groupAll();
 	var totalItems = ndx.groupAll().reduceSum(function(d) {return d["count"];});
     //console.log ("Sum of items count " + totalItems.value)
@@ -50,6 +61,7 @@ ditems.forEach(function(d) {
 	var timeChart = dc.barChart("#time-chart");
 	var numberItemsND = dc.numberDisplay("#number-items-nd");
 	var totalItemsND = dc.numberDisplay("#total-items-nd");
+    var timeChart2 = dc.lineChart("#dc-time-chart");
 
 	numberItemsND
 		.formatNumber(d3.format("d"))
@@ -76,7 +88,16 @@ ditems.forEach(function(d) {
         timeChart.xAxis().ticks(6);
 		//timeChart.xAxis().ticks(5).tickFormat(function (v) { var monthNameFormat = d3.time.format("%A"); return monthNameFormat(new Date(v));  });
 
-
+     // time graph
+          timeChart2.width(960)
+            .height(150)
+            .margins({top: 10, right: 10, bottom: 20, left: 40})
+            .dimension(volumeByHour)
+            .group(sumOfEntries)
+            .transitionDuration(500)
+            .elasticY(true)
+            .x(d3.time.scale().domain([minDate, maxDate]))
+            .xAxis();
 
 
 		   dc.renderAll();

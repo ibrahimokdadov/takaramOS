@@ -39,7 +39,7 @@ def dashboard():
 def get_item_per_day():
     #TODO: add authentication
     items_json = []
-    item_counts_day = Item.get_this_week_items()
+    item_counts_day = Item.get_posted_items_count()
     for item in item_counts_day:
         items_json.append(item)
     print(items_json)
@@ -74,5 +74,9 @@ def approve_item(item_id):
         return make_response(pending_items())
     else:
         return render_template("login.html", message="System could not detect rights to access this area.")
+
+@admin_blueprints.route('/admin/test')
+def test_graphs():
+    return render_template("admin/statistics.html")
 
 

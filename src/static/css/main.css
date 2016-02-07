@@ -31,3 +31,16 @@ background-color: #333333;
 background-color: #337ab7;
 }
 .read { color: #222;background-color: #F3F3F3; }
+
+path {
+stroke: steelblue;
+stroke-width: 2;
+fill: none;
+}
+.axis path,
+.axis line {
+fill: none;
+stroke: red;
+stroke-width: 1;
+shape-rendering: crispEdges;
+}
