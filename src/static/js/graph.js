@@ -4,8 +4,7 @@ var margin = {top: 30, right: 20, bottom: 30, left: 50},
     width = 600 - margin.left - margin.right,
     height = 270 - margin.top - margin.bottom;
 
-// Parse the date / time
-var parseDate = d3.time.format("%d-%b-%y").parse;
+
 
 // Set the ranges
 var x = d3.time.scale().range([0, width]);
@@ -19,7 +18,7 @@ var yAxis = d3.svg.axis().scale(y)
 
 // Define the line
 var valueline = d3.svg.line()
-                            .x(function(d) { console.log("- " + d.date); return x(d.date); })
+                            .x(function(d) { return x(d.date); })
                             .y(function(d) { return y(d.count); });
 
 // Adds the svg canvas
@@ -36,11 +35,10 @@ d3.json("/admin/dashboard/ditems", function(error, data) {
 data.forEach(function(d) {
 
 d.date =  new Date(d['_id']['$date']); //parseDate(d.date);
-d.count = +d.count;
+d.count = +d.count; //change to integer
 });
 
 // Scale the range of the data
-console.log("hellow")
 x.domain(d3.extent(data, function(d) { return new Date(d['_id']['$date']); }));
 y.domain([0, d3.max(data, function(d) { return d.count; })]);
 

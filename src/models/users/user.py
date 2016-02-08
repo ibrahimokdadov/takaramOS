@@ -60,3 +60,9 @@ class User(object):
     @staticmethod
     def delete_user(user_id):
         result = Database.remove()
+
+    @classmethod
+    def get_posted_users_count(cls):
+        users = Database.aggregate(UserConstants.COLLECTION, [{"$group":{"_id":"$date_created", "count":{"$sum":1}}}, {"$sort":{"_id":1}}])
+        return users
+

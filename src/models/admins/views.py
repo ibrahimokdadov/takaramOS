@@ -7,6 +7,7 @@ from src.models.items.item import Item
 import src.models.admins.constants as AdminConstants
 import src.models.items.constants as ItemConstants
 import src.models.users.constants as UserConstants
+from src.models.users.user import User
 
 __author__ = 'ibininja'
 
@@ -36,16 +37,26 @@ def dashboard():
                                    users_count=users_count, )
 
 @admin_blueprints.route('/admin/dashboard/ditems')
-def get_item_per_day():
+def get_posted_items_count():
     #TODO: add authentication
     items_json = []
     item_counts_day = Item.get_posted_items_count()
     for item in item_counts_day:
         items_json.append(item)
-    print(items_json)
+    print("items list: ",items_json)
     items_json=json_util.dumps(items_json, default=json_util.default)
-    print(items_json)
     return items_json
+
+@admin_blueprints.route('/admin/dashboard/dusers')
+def get_posted_users_count():
+    #TODO: add authentication
+    users_json = []
+    users_counts_day = User.get_posted_users_count()
+    for user in users_counts_day:
+        users_json.append(user)
+    print("Users list: ",users_json)
+    users_json=json_util.dumps(users_json, default=json_util.default)
+    return users_json
 
 @admin_blueprints.route('/admin/pending/items')
 def pending_items():
