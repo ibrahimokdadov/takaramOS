@@ -1,7 +1,7 @@
 queue()
     .defer(d3.json, "/admin/dashboard/ditems")
     .await(makeGraphs);
-
+var items_json_modified;
 function makeGraphs(error, ditemsJson){
     console.log(ditemsJson);
     var ditems = ditemsJson;
@@ -19,8 +19,9 @@ function makeGraphs(error, ditemsJson){
         d["total_items"] = +d["count"];
 
 
-    });
 
+    });
+items_json_modified = ditems;
     //Create a Crossfilter instance
         var ndx = crossfilter(ditems);
         //var facts = crossfilter(ditems); //same as above different naming.
@@ -110,7 +111,7 @@ function makeGraphs(error, ditemsJson){
 
     // Set the dimensions of the canvas / graph
     var margin = {top: 30, right: 20, bottom: 30, left: 50},
-        width = 600 - margin.left - margin.right,
+        width = 500 - margin.left - margin.right,
         height = 270 - margin.top - margin.bottom;
 
 
@@ -130,7 +131,10 @@ function makeGraphs(error, ditemsJson){
                                 .interpolate("basis")
                                 .x(function(d) { return x(d.date); })
                                 .y(function(d) { return y(d.count); });
-
+     var valueline2 = d3.svg.line()
+                                    .interpolate("basis")
+                                    .x(function(d) { return x(d["date_posted"]); })
+                                    .y(function(d) { return y(d["total_items"]); });
     // Adds the svg canvas
     var svg = d3.select("#dc-user-chart")
                                 .append("svg")
@@ -143,7 +147,6 @@ function makeGraphs(error, ditemsJson){
     // Get the data
     d3.json("/admin/dashboard/dusers", function(error, data) {
     data.forEach(function(d) {
-
     d.date =  new Date(d['_id']['$date']); //parseDate(d.date);
     d.count = +d.count; //change to integer
     });
@@ -162,8 +165,6 @@ function makeGraphs(error, ditemsJson){
     .attr("class", "x axis")
     .attr("transform", "translate(0," + height + ")")
     .call(xAxis);
-
-
 
     // Add the Y Axis
     svg.append("g")
@@ -186,4 +187,78 @@ function makeGraphs(error, ditemsJson){
     .style("font-size", "16px")
     .style("text-decoration", "underline")
     .text("User Signups vs Date Graph");
+
+
+
+
+    });
+
+
+
+
+
+     var valueline2 = d3.svg.line()
+                                    .interpolate("basis")
+                                    .x(function(d) { return x(d["date_posted"]); })
+                                    .y(function(d) { return y(d["total_items"]); });
+    // Adds the svg canvas
+    var usersItems = d3.select("#dc-user-items-chart")
+                                .append("svg")
+                                .attr("width", width + margin.left + margin.right)
+                                .attr("height", height + margin.top + margin.bottom)
+                                .append("g")
+                                .attr("transform",
+                                "translate(" + margin.left + "," + margin.top + ")");
+
+
+    // Get the data
+    d3.json("/admin/dashboard/dusers", function(error, data) {
+    data.forEach(function(d) {
+    d.date =  new Date(d['_id']['$date']); //parseDate(d.date);
+    d.count = +d.count; //change to integer
+    });
+
+    // Scale the range of the data
+    x.domain(d3.extent(data, function(d) { return new Date(d['_id']['$date']); }));
+    y.domain([0, d3.max(data, function(d) { return d.count; })]);
+
+    // Add the valueline path.
+    usersItems.append("path")
+                    .attr("class", "line")
+                    .attr("d", valueline(data));
+
+    usersItems.append("path")
+                    .style("stroke", "green")
+                    .attr("class", "line")
+                    .attr("d", valueline2(items_json_modified));
+
+    // Add the X Axis
+    usersItems.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height + ")")
+    .call(xAxis);
+
+
+
+    // Add the Y Axis
+    usersItems.append("g")
+    .attr("class", "y axis")
+    .call(yAxis);
+
+    //add y label
+	usersItems.append("text")
+	.attr("transform", "rotate(-90)")
+	.attr("y", 6)
+	.attr("x",margin.top - (height / 2))
+	.attr("dy", "1em")
+	.style("text-anchor", "middle")
+	.text("Users | items");
+
+	usersItems.append("text")
+    .attr("x", (width / 2))
+    .attr("y", 0 - (margin.top / 2))
+    .attr("text-anchor", "middle")
+    .style("font-size", "16px")
+    .style("text-decoration", "underline")
+    .text("Users to Items posted Graph");
     });
