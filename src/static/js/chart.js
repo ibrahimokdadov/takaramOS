@@ -1,9 +1,10 @@
 queue()
     .defer(d3.json, "/admin/dashboard/ditems")
     .await(makeGraphs);
+
 var items_json_modified;
+
 function makeGraphs(error, ditemsJson){
-    console.log(ditemsJson);
     var ditems = ditemsJson;
     var dateFormat = d3.time.format("%Y-%m-%d %H:%M:%S");
 
@@ -21,7 +22,9 @@ function makeGraphs(error, ditemsJson){
 
 
     });
-items_json_modified = ditems;
+
+    items_json_modified = ditems;
+
     //Create a Crossfilter instance
         var ndx = crossfilter(ditems);
         //var facts = crossfilter(ditems); //same as above different naming.
@@ -110,8 +113,8 @@ items_json_modified = ditems;
 
 
     // Set the dimensions of the canvas / graph
-    var margin = {top: 30, right: 20, bottom: 30, left: 50},
-        width = 500 - margin.left - margin.right,
+    var margin = {top: 30, right: 30, bottom: 30, left: 50},
+        width = 490 - margin.left - margin.right,
         height = 270 - margin.top - margin.bottom;
 
 
@@ -180,6 +183,7 @@ items_json_modified = ditems;
 	.style("text-anchor", "middle")
 	.text("Users");
 
+	//add headline
 	svg.append("text")
     .attr("x", (width / 2))
     .attr("y", 0 - (margin.top / 2))
@@ -188,21 +192,15 @@ items_json_modified = ditems;
     .style("text-decoration", "underline")
     .text("User Signups vs Date Graph");
 
-
-
-
     });
 
 
 
+//users Items
 
 
-     var valueline2 = d3.svg.line()
-                                    .interpolate("basis")
-                                    .x(function(d) { return x(d["date_posted"]); })
-                                    .y(function(d) { return y(d["total_items"]); });
     // Adds the svg canvas
-    var usersItems = d3.select("#dc-user-items-chart")
+    var usersItemsSVG = d3.select("#dc-user-items-chart")
                                 .append("svg")
                                 .attr("width", width + margin.left + margin.right)
                                 .attr("height", height + margin.top + margin.bottom)
@@ -210,6 +208,10 @@ items_json_modified = ditems;
                                 .attr("transform",
                                 "translate(" + margin.left + "," + margin.top + ")");
 
+     var valueline2 = d3.svg.line()
+                                        .interpolate("basis")
+                                        .x(function(d) { return x(d["date_posted"]); })
+                                        .y(function(d) { return y(d["total_items"]); });
 
     // Get the data
     d3.json("/admin/dashboard/dusers", function(error, data) {
@@ -223,17 +225,17 @@ items_json_modified = ditems;
     y.domain([0, d3.max(data, function(d) { return d.count; })]);
 
     // Add the valueline path.
-    usersItems.append("path")
+    usersItemsSVG.append("path")
                     .attr("class", "line")
                     .attr("d", valueline(data));
 
-    usersItems.append("path")
+    usersItemsSVG.append("path")
                     .style("stroke", "green")
                     .attr("class", "line")
                     .attr("d", valueline2(items_json_modified));
 
     // Add the X Axis
-    usersItems.append("g")
+    usersItemsSVG.append("g")
     .attr("class", "x axis")
     .attr("transform", "translate(0," + height + ")")
     .call(xAxis);
@@ -241,12 +243,12 @@ items_json_modified = ditems;
 
 
     // Add the Y Axis
-    usersItems.append("g")
+    usersItemsSVG.append("g")
     .attr("class", "y axis")
     .call(yAxis);
 
     //add y label
-	usersItems.append("text")
+	usersItemsSVG.append("text")
 	.attr("transform", "rotate(-90)")
 	.attr("y", 6)
 	.attr("x",margin.top - (height / 2))
@@ -254,11 +256,46 @@ items_json_modified = ditems;
 	.style("text-anchor", "middle")
 	.text("Users | items");
 
-	usersItems.append("text")
+	usersItemsSVG.append("text")
     .attr("x", (width / 2))
     .attr("y", 0 - (margin.top / 2))
     .attr("text-anchor", "middle")
     .style("font-size", "16px")
     .style("text-decoration", "underline")
     .text("Users to Items posted Graph");
+    console.log(data[data.length-1])
+
+    usersItemsSVG.append("text")
+		.attr("transform", "translate(" + (width-10) + "," + (6) + ")") //x,y
+		.attr("dy", ".35em")
+		.attr("text-anchor", "start")
+		.style("fill", "steelblue")
+		.text("Users");
+
+    usersItemsSVG.append("text")
+		.attr("transform", "translate(" + (width-10) + "," + (20) + ")")
+		.attr("dy", ".35em")
+		.attr("text-anchor", "start")
+		.style("fill", "green")
+		.text("Items");
+
+    //display fots on users graph
+    usersItemsSVG.selectAll("dot")
+        .data(data)
+        .enter().append("circle")
+        .attr("r", 3.5)
+        .attr("cx", function(d) { return x(new Date(d['_id']['$date'])); })
+        .attr("cy", function(d) { return y(d.count); });
+
+    //display dots on items graph
+    usersItemsSVG.selectAll("dot")
+        .data(items_json_modified)
+        .enter().append("circle")
+        .attr("r", 3.5)
+        .attr("cx", function(d) { return x(new Date(d['date_posted'])); })
+        .attr("cy", function(d) { return y(d['total_items']); });
+
+
+
+
     });
