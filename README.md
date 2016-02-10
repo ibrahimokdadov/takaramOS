@@ -45,10 +45,7 @@ This project is made using:
 * add encryption to registration and logging in
 * add profiles to accounts
 * add profile image to accounts and navbar
-* add graphs showing new items each day
-* add graphs showing items last week
-* add graphs showing new registrations
-* add graphs showing registrations last week
+* add graphs showing new items each day 
 
 ###done
 * ~~add edit items~~
@@ -60,6 +57,9 @@ This project is made using:
 * ~~ability to search for items and in description~~
 * ~~add Multiple image gallery on detail view~~
 * ~~messaging system~~
+* ~~add graphs showing previous registrations~~
+* ~~add graphs showing items posted per given period~~
+* ~~add graphs showing new registrations~~
 
 ###license
 MIT?
