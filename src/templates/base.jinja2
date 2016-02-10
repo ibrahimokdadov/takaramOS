@@ -62,7 +62,15 @@
                     {% endif %}
                 </li>
                 {% if session['admin'] %}
+
                 <nav class="navbar navbar-inverse">
+                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-2" aria-expanded="false">
+                        <span class="sr-only">Admin Menu</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
                     <li class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
                         <ul class="nav navbar-nav">
 
