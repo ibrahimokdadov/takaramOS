@@ -19,20 +19,20 @@ def dashboard():
     # verify User is admin
     if session.get('admin') is None:
         if session.get('email') is not None:
-            return render_template("message_center.html", message="The page you requested is not available")
+            return render_template("message_center.jinja2", message="The page you requested is not available")
         else:
-            return render_template("login.html", message="You are not logged in.")
+            return render_template("login.jinja2", message="You are not logged in.")
     else:
         admin = Admin.get_user_by_email(session['admin'], AdminConstants.COLLECTION)
         if admin is None:
-            return render_template("message_center.html",
+            return render_template("message_center.jinja2",
                                    message="System could not detect rights to access to this area.")
         else:
             items_count = admin.get_number_of_all_items()
             approved_items_count = admin.get_number_of_all_approved_items()
             pending_items_count = admin.get_number_of_all_pending_items()
             users_count = admin.get_number_of_users()
-            return render_template("admin/dashboard.html", items_count=items_count,
+            return render_template("admin/dashboard.jinja2", items_count=items_count,
                                    approved_items_count=approved_items_count, pending_items_count=pending_items_count,
                                    users_count=users_count, )
 
@@ -62,17 +62,17 @@ def get_posted_users_count():
 def pending_items():
     if session.get('admin') is None:
         if session.get('email') is not None:
-            return render_template("message_center.html", message="The page you requested is not available")
+            return render_template("message_center.jinja2", message="The page you requested is not available")
         else:
-            return render_template("login.html", message="You are not logged in.")
+            return render_template("login.jinja2", message="You are not logged in.")
     else:
         admin = Admin.get_user_by_email(session['admin'], AdminConstants.COLLECTION)
         if admin is None:
-            return render_template("message_center.html",
+            return render_template("message_center.jinja2",
                                    message="System could not detect rights to access to this area.")
         else:
             items = Item.get_pending_items()
-            return render_template("admin/pending_items.html", items=items)
+            return render_template("admin/pending_items.jinja2", items=items)
 
 
 @admin_blueprints.route('/user/items/approve/<string:item_id>')
@@ -84,10 +84,10 @@ def approve_item(item_id):
             return make_response(pending_items())
         return make_response(pending_items())
     else:
-        return render_template("login.html", message="System could not detect rights to access this area.")
+        return render_template("login.jinja2", message="System could not detect rights to access this area.")
 
 @admin_blueprints.route('/admin/test')
 def test_graphs():
-    return render_template("admin/statistics.html")
+    return render_template("admin/statistics.jinja2")
 
 

@@ -42,14 +42,14 @@ def is_list(value):
 
 @app.route('/')
 def home_page():
-    return render_template('home.html', img_name="laptop.jpg")
+    return render_template('home.jinja2', img_name="laptop.jpg")
 
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     session['email'] = None
     if request.method == 'GET':
-        return render_template('register.html')
+        return render_template('register.jinja2')
     else:
         username = request.form['username']
         email = request.form['email']
@@ -62,14 +62,14 @@ def register():
                 user.save_to_mongo()
                 session['email'] = user.email
                 return make_response(view_items())
-        return render_template("register.html", message="Opps...Account information (username/email) are taken...Are you sure it is not you?")
+        return render_template("register.jinja2", message="Opps...Account information (username/email) are taken...Are you sure it is not you?")
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if session.get('email') is None:
         if request.method == 'GET':
-            return render_template('login.html')
+            return render_template('login.jinja2')
         else:
             username_email = request.form['username_email']
             password = request.form['password']
@@ -82,28 +82,28 @@ def login():
                         session['admin'] = admin.email
                     return make_response(view_items())
                 else:
-                    return render_template("login.html", message="Invalid login")
+                    return render_template("login.jinja2", message="Invalid login")
 
             else:
-                return render_template("login.html", message="User does not exist")
+                return render_template("login.jinja2", message="User does not exist")
     else:
         if session['email'] is not None:
-            return render_template("message_center.html", message="You are already logged In.")
+            return render_template("message_center.jinja2", message="You are already logged In.")
         else:
-            return render_template("login.html")
+            return render_template("login.jinja2")
 
 
 @app.route('/logout')
 def logout():
     session['email'] = None
     session['admin'] = None
-    return render_template("home.html")
+    return render_template("home.jinja2")
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
     word = request.form['search_box']
     results = Item.search_items(word)
-    return render_template("search.html", results=results)
+    return render_template("search.jinja2", results=results)
 
 if __name__ == "__main__":
     app.run(port=4556, debug=True)

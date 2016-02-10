@@ -19,28 +19,28 @@ APP_ROOT = (os.path.realpath('./'))
 @item_blueprints.route('/user/items/view')
 def view_items():
     if session.get('email') is None:
-        return render_template("login.html", message="You must be logged in to view your items")
+        return render_template("login.jinja2", message="You must be logged in to view your items")
     else:
         if session['email'] is None:
-            return render_template("login.html", message="You must be logged in to view your items")
+            return render_template("login.jinja2", message="You must be logged in to view your items")
         user = User.get_user_by_email(session['email'], UserConstants.COLLECTION)
         items = Item.get_items_by_user_id(user._id)
-        return render_template("items.html", items=items)
+        return render_template("items.jinja2", items=items)
 
 
 @item_blueprints.route('/items/view')
 def view_all_items():
     items = Item.get_all_approved_items()
-    return render_template("all_items.html", items=items)
+    return render_template("all_items.jinja2", items=items)
 
 
 @item_blueprints.route('/user/items/add', methods=['POST', 'GET'])
 def add_item():
     if session.get('email') is None:
-        return render_template("login.html", message="You must be logged in to add items")
+        return render_template("login.jinja2", message="You must be logged in to add items")
     else:
         if request.method == 'GET':
-            return render_template("add_item.html")
+            return render_template("add_item.jinja2")
         else:
             uploaded_file_list = request.files.getlist("file")
             title = request.form['title']
@@ -55,7 +55,7 @@ def add_item():
                     os.mkdir(target)
             except Exception as e:
                 print(e)
-                return render_template("message_center.html",
+                return render_template("message_center.jinja2",
                                        message="System was not able to store uploaded file in server! Contact Admin.")
             filename = ''
             images_path = []
@@ -79,13 +79,13 @@ def item_details(item_id):
         if session.get('email') is not None:
             user = User.get_user_by_email(email=session['email'], collection=UserConstants.COLLECTION)
             if (user._id == item.user_id) or (session.get('admin') is not None):
-                return render_template("item_details.html", item=item, editable=True)
+                return render_template("item_details.jinja2", item=item, editable=True)
             else:
-                return render_template("item_details.html", item=item)
+                return render_template("item_details.jinja2", item=item)
         else:
-            return render_template("item_details.html", item=item)
+            return render_template("item_details.jinja2", item=item)
     else:
-        return render_template("message_center.html",
+        return render_template("message_center.jinja2",
                                message="Item {} does not have details. Contact Us if you need further information!".format(
                                        item.title))
 
@@ -99,9 +99,9 @@ def delete_item(item_id):
             if item.user_id == user._id:
                 item.remove_item()
                 return make_response(view_items())
-        return render_template("items.html", message="You can't remove item")
+        return render_template("items.jinja2", message="You can't remove item")
     else:
-        return render_template("login.html", message="You must be logged-in to remove items.")
+        return render_template("login.jinja2", message="You must be logged-in to remove items.")
 
 
 @item_blueprints.route('/user/items/edit/<string:item_id>/<string:attribute_name>/<string:attribute_value>')
@@ -110,13 +110,13 @@ def edit_item(item_id, attribute_name, attribute_value):
     if item is not None:
         item.update_item(attribute_name=attribute_name, attribute_value=attribute_value)
         if session.get('admin') is not None:
-            return render_template("item_details.html", item=item)
+            return render_template("item_details.jinja2", item=item)
         else:
             item.update_item(attribute_name="approved", attribute_value=False)
-            return render_template("message_center.html",
+            return render_template("message_center.jinja2",
                                    message="Item will published as soon as the change is approved")
     else:
-        return render_template("message_center.html",
+        return render_template("message_center.jinja2",
                                message="Could not update Item {} . Contact Us if you need further information!".format(
                                        item.title))
 
@@ -128,10 +128,10 @@ def update_title():
     item = Item.get_item_by_id(item_id)
     item.update_item("title", value)
     if session.get('admin') is not None:
-        return render_template("item_details.html", item=item)
+        return render_template("item_details.jinja2", item=item)
     else:
         item.update_item(attribute_name="approved", attribute_value=False)
-        return render_template("message_center.html", message="Item will published as soon as the change is approved")
+        return render_template("message_center.jinja2", message="Item will published as soon as the change is approved")
 
 
 @item_blueprints.route('/user/item/update/description', methods=['GET', 'POST'])
@@ -141,10 +141,10 @@ def update_description():
     item = Item.get_item_by_id(item_id)
     item.update_item("description", value)
     if session.get('admin') is not None:
-        return render_template("item_details.html", item=item)
+        return render_template("item_details.jinja2", item=item)
     else:
         item.update_item(attribute_name="approved", attribute_value=False)
-        return render_template("message_center.html", message="Item will published as soon as the change is approved")
+        return render_template("message_center.jinja2", message="Item will published as soon as the change is approved")
 
 
 @item_blueprints.route('/user/item/update/contact', methods=['GET', 'POST'])
@@ -154,7 +154,7 @@ def update_contact():
     item = Item.get_item_by_id(item_id)
     item.update_item("contact", value)
     if session.get('admin') is not None:
-        return render_template("item_details.html", item=item)
+        return render_template("item_details.jinja2", item=item)
     else:
         item.update_item(attribute_name="approved", attribute_value=False)
-        return render_template("message_center.html", message="Item will published as soon as the change is approved")
+        return render_template("message_center.jinja2", message="Item will published as soon as the change is approved")

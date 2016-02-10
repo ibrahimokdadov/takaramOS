@@ -13,7 +13,7 @@ message_blueprints = Blueprint("messages", __name__)
 @message_blueprints.route('/user/messages/sent/<string:user_email>')
 def get_sent_messages(user_email):
     if session.get('email') is None:
-        return render_template("login.html", message="You must be logged in to add items")
+        return render_template("login.jinja2", message="You must be logged in to add items")
     else:
         if user_email == session['email']:
             user = User.get_user_by_email(collection=UserConstants.COLLECTION, email=user_email)
@@ -28,20 +28,20 @@ def get_sent_messages(user_email):
                     unread_replies_list[message._id] = Message.get_unread_recieved_replies_count(user_id=user._id,
                                                                                                  item_id=message.item_id)
 
-                return render_template("user/messages/sent_messages.html", user_id=user._id, messages=messages,
+                return render_template("user/messages/sent_messages.jinja2", user_id=user._id, messages=messages,
                                        unread_replies=unread_replies_list,
                                        unread_recieved_messages_count=unread_recieved_messages_count)
             else:
-                return render_template("message_center.html", message="Could not locate user")
+                return render_template("message_center.jinja2", message="Could not locate user")
         else:
-            return render_template("message_center.html",
+            return render_template("message_center.jinja2",
                                    message="Looks like you used an email that could not be authorized")
 
 
 @message_blueprints.route('/user/messages/recieved/<string:user_email>')
 def get_recieved_messages(user_email):
     if session.get('email') is None:
-        return render_template("login.html", message="You must be logged in to add items")
+        return render_template("login.jinja2", message="You must be logged in to add items")
     else:
         if user_email == session['email']:
             user = User.get_user_by_email(collection=UserConstants.COLLECTION, email=user_email)
@@ -57,13 +57,13 @@ def get_recieved_messages(user_email):
                 for message in messages:
                     unread_replies_list[message._id] = message.get_unread_recieved_replies_count(user_id=user._id,
                                                                                                  item_id=message.item_id)
-                return render_template("user/messages/recieved_messages.html", user_id=user._id, messages=messages,
+                return render_template("user/messages/recieved_messages.jinja2", user_id=user._id, messages=messages,
                                        unread_messages_count=unread_messages_count, unread_replies=unread_replies_list,
                                        unread_sent_messages_count=unread_sent_messages_count)
             else:
-                return render_template("message_center.html", message="Could not locate user")
+                return render_template("message_center.jinja2", message="Could not locate user")
         else:
-            return render_template("message_center.html",
+            return render_template("message_center.jinja2",
                                    message="Looks like you used an email that could not be authorized")
 
 
@@ -71,7 +71,7 @@ def get_recieved_messages(user_email):
 def get_message_details(message_id):
     # TODO: add verification mechanism to verify that user is part of the message (user_id, sender_id, recipient_id)
     if session.get('email') is None:
-        return render_template("login.html", message="You must be logged in to add items")
+        return render_template("login.jinja2", message="You must be logged in to add items")
     else:
         message = Message.get_message_by_id(message_id)
         if message is not None:
@@ -86,22 +86,22 @@ def get_message_details(message_id):
                         print("reciever", reply.title)
                         reply.mark_massage_read()
 
-                return render_template("user/messages/message_details.html", user_id=user._id, messages=messages,
+                return render_template("user/messages/message_details.jinja2", user_id=user._id, messages=messages,
                                        item=item)
             else:
-                return render_template("message_center.html",
+                return render_template("message_center.jinja2",
                                        message="you are not allowed to view details of this message")
         else:
-            return render_template("message_center.html", message="could not find message details")
+            return render_template("message_center.jinja2", message="could not find message details")
 
 
 @message_blueprints.route('/user/messages/add/<string:item_id>', methods=['GET', 'POST'])
 def add_message(item_id):
     if session.get('email') is None:
-        return render_template("login.html", message="You must be logged in to add items")
+        return render_template("login.jinja2", message="You must be logged in to add items")
     else:
         if request.method == 'GET':
-            return render_template("user/messages/add_message.html", item_id=item_id)
+            return render_template("user/messages/add_message.jinja2", item_id=item_id)
         else:
             # TODO: add check sender_id and recipient id to verify they are not same to avoind sending to oneself.
             user = User.get_user_by_email(collection=UserConstants.COLLECTION, email=session['email'])
@@ -121,7 +121,7 @@ def add_message(item_id):
 @message_blueprints.route('/user/message/reply/<string:item_id>', methods=['GET', 'POST'])
 def add_reply(item_id):
     if session.get('email') is None:
-        return render_template("login.html", message="You must be logged in to add items")
+        return render_template("login.jinja2", message="You must be logged in to add items")
     else:
         if request.method == 'POST':
 
@@ -144,9 +144,9 @@ def add_reply(item_id):
                     new_message.save_to_mongo()
                     return make_response(get_sent_messages(user.email))
                 else:
-                    return render_template("message_center.html",
+                    return render_template("message_center.jinja2",
                                            message="you are not allowed to view details of this message")
             else:
-                return render_template("message_center.html", message="could not find message to reply to")
+                return render_template("message_center.jinja2", message="could not find message to reply to")
         else:
-            return render_template("message_center.html")
+            return render_template("message_center.jinja2")

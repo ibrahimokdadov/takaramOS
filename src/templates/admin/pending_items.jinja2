@@ -1,22 +1,14 @@
-{% extends "base.html" %}
+{% extends "base.jinja2" %}
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/pinterest.css')}}">
 <script src="{{ url_for('static', filename='js/pinterest.js')}}"></script>
 <div class="container form-width">
-    <h1 class="text-center"> Your Posted Items </h1>
+    <h1 class="text-center"> Pending Items </h1>
     {% if message is defined %}
     <h4 class="text-center"><span class="label label-danger">{{ message }}</span></h4>
     {% endif %}
-    <a href="/user/items/add">
-        <button class="center-block btn btn-success"><i class="fa fa-plus"></i> add item</button>
-    </a>
+
 </div>
-<hr>
-<ol class="breadcrumb">
-  <li><a href="#">home</a></li>
-  <li class="active"><a href="#">my items</a></li>
-</ol>
-<hr>
 <section id="pinBoot">
     {% if items|length > 0 %}
     {% for item in items | sort(True, attribute='date_posted') %}
@@ -32,10 +24,12 @@
             {% for url in item.image_url %}
             {% if one_image == false%}
             <div class="media">
-                <a class="thumbnail" href="/user/items/detail/{{item._id}}">
-                    <img class="img-rounded" src="{{ url_for('static', filename='{}'.format( url)) }}">
-                    <span class="badge badge-warning pull-right">{{item.image_url|length}}</span>
-                </a>
+            <a class="thumbnail" href="/user/items/detail/{{item._id}}">
+
+                <img class="img-rounded" src="{{ url_for('static', filename='{}'.format( url)) }}">
+                <span class="badge badge-warning pull-right">{{item.image_url|length}}</span>
+
+            </a>
             </div>
             {%set one_image = true%}
             {%endif%}
@@ -43,19 +37,20 @@
 
             {% else %}
             <div class="media">
-                <a class="thumbnail" href="/user/items/detail/{{item._id}}">
-                    <img class="img-rounded" src="{{ url_for('static', filename='{}'.format( item.image_url)) }}">
-                </a>
+            <a class="thumbnail" href="/user/items/detail/{{item._id}}">
+                <img class="img-rounded" src="{{ url_for('static', filename='{}'.format( item.image_url)) }}">
+            </a>
             </div>
             {% endif %}
             <p>Description: {{ item.description }}</p>
-            <a class="label label-danger" href="/user/items/delete/{{item._id}}"><i class="fa fa-trash-o"></i> delete</a>
+            <a class="label label-success" href="/user/items/approve/{{item._id}}">Approve</a>
+            <a class="label label-danger" href="/user/items/delete/{{item._id}}">Delete</a>
         </div>
         <hr>
     </article>
     {% endfor %}
     {% else %}
-    <h4>You did not add any item yet; Look around you mind fine something you do not need..</h4>
+    <h4>It is like a desert in here. No pending Items</h4>
     {% endif %}
 </section>
 {% endblock %}

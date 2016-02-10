@@ -13,7 +13,7 @@ user_blueprints = Blueprint('users', __name__)
 @user_blueprints.route('/admin/list/users')
 def list_users():
     users = User.get_all_users()
-    return render_template("admin/list_users.html", users=users)
+    return render_template("admin/list_users.jinja2", users=users)
 
 
 @user_blueprints.route('/admin/list/user/delete/<string:user_id>')
