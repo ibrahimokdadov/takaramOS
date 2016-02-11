@@ -198,7 +198,7 @@ function makeGraphs(error, ditemsJson){
 
 //users Items
 
-
+    var formatTime = d3.time.format("%e %B");
     // Adds the svg canvas
     var usersItemsSVG = d3.select("#dc-user-items-chart")
                                 .append("svg")
@@ -208,10 +208,15 @@ function makeGraphs(error, ditemsJson){
                                 .attr("transform",
                                 "translate(" + margin.left + "," + margin.top + ")");
 
-     var valueline2 = d3.svg.line()
-                                        .interpolate("basis")
-                                        .x(function(d) { return x(d["date_posted"]); })
-                                        .y(function(d) { return y(d["total_items"]); });
+    var valueline2 = d3.svg.line()
+                                .interpolate("basis")
+                                .x(function(d) { return x(d["date_posted"]); })
+                                .y(function(d) { return y(d["total_items"]); });
+
+    var tooltipDiv = d3.select("#dc-user-items-chart")
+                                .append("div")
+                                .attr("class", "tooltipGraph")
+                                .style("opacity", 0);
 
     // Get the data
     d3.json("/admin/dashboard/dusers", function(error, data) {
@@ -291,10 +296,25 @@ function makeGraphs(error, ditemsJson){
     usersItemsSVG.selectAll("dot")
         .data(items_json_modified)
         .enter().append("circle")
-        .attr("r", 3.5)
+        .attr("r", 5)
         .attr("cx", function(d) { return x(new Date(d['date_posted'])); })
-        .attr("cy", function(d) { return y(d['total_items']); });
-
+        .attr("cy", function(d) { return y(d['total_items']); })
+        .on("mouseover", function(d) {
+            tooltipDiv.transition()
+                .duration(200)
+                .style("opacity", .9);
+                console.log(formatTime(new Date(d['date_posted'])));
+                console.log(d['total_items']);
+                console.log(d3.select(this).attr("cy")-10);
+            tooltipDiv.html(formatTime(new Date(d['date_posted'])) + "<br/>"  + "<b>"+d['total_items']+"</b>")
+                .style("left",  d3.select(this).attr("cx") + "px")
+                .style("top", d3.select(this).attr("cy")  + "px");
+            })
+        .on("mouseout", function(d) {
+            tooltipDiv.transition()
+                .duration(500)
+                .style("opacity", 1);
+        });
 
 
 
