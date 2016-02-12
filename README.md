@@ -12,9 +12,9 @@ This version is the alpha version many features are missing. Hopefully I will be
 
 ###technicalilites
 This project is made using:
-* python
-* mongoDB
-* bootstrap
+* python 3
+* mongoDB 3
+* bootstrap 3
 * x-editable
 * d3.js
 * dc.js
