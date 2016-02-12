@@ -22,6 +22,8 @@ This project is made using:
 
 ###current features
 * register and signup
+* user can add profile
+* if user does not have profile will automatically be prompted to create one.
 * add item [inc. uploading images]
 * each users edits their own items
 * delete item
@@ -42,10 +44,10 @@ This project is made using:
  * notifications for new unread messages.
 
 ###todos
-* add encryption to registration and logging in
-* add profiles to accounts
+* add encryption to registration and logging in* 
 * add profile image to accounts and navbar
 * add graphs showing new items each day 
+* editing profile details
 
 ###done
 * ~~add edit items~~
@@ -60,6 +62,7 @@ This project is made using:
 * ~~add graphs showing previous registrations~~
 * ~~add graphs showing items posted per given period~~
 * ~~add graphs showing new registrations~~
+* ~~add profiles to accounts~~
 
 ###license
 MIT?
