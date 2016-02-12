@@ -5,7 +5,7 @@ Do not hold back and start giving.
 
 This version is the alpha version many features are missing. Hopefully I will be add more features to it as time progresses. Feel free to tune in and help the way you want.
 
-![alt tag](https://github.com/ibininja/takaramOS/blob/master/src/static/assets/takaramOS.png?raw=true)
+![alt tag](https://github.com/ibininja/takaramOS/blob/master/src/static/assets/takaramOS_small.png?raw=true) | ![alt tag](https://github.com/ibininja/takaramOS/blob/master/src/static/assets/takaram_dashboard_small.png?raw=true) 
 
 ###version
 0.2
