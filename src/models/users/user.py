@@ -10,11 +10,12 @@ __author__ = 'ibininja'
 
 
 class User(object):
-    def __init__(self, username, email, password, date_created=datetime.datetime.utcnow(), _id=None):
+    def __init__(self, username, email, password, date_created=datetime.datetime.utcnow(),profile=[], _id=None):
         self.username = username
         self.email = email
         self.password = password
         self.date_created= date_created
+        self.profile = profile
         self._id = uuid.uuid4().hex if _id is None else _id
 
     def json(self):
@@ -23,6 +24,7 @@ class User(object):
             "email": self.email,
             "password": self.password,
             "date_created": self.date_created,
+            "profile": self.profile,
             "_id": self._id
         }
 
@@ -65,4 +67,7 @@ class User(object):
     def get_posted_users_count(cls):
         users = Database.aggregate(UserConstants.COLLECTION, [{"$group":{"_id":"$date_created", "count":{"$sum":1}}}, {"$sort":{"_id":1}}])
         return users
+
+    def set_profile(self, profile):
+        Database.update_one(UserConstants.COLLECTION, {"_id":self._id}, {"$set":{"profile":profile}})
 
