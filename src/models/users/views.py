@@ -34,8 +34,22 @@ def set_profile():
             full_name = request.form['full_name']
             country = request.form['country']
             user = User.get_user_by_email(collection=UserConstants.COLLECTION, email=session['email'])
-            profile = []
-            profile.append({"full_name": full_name})
-            profile.append({"country": country})
+            profile = [{"full_name": full_name}, {"country": country}]
             user.set_profile(profile)
             return render_template("user/view_profile.html")
+
+
+@user_blueprints.route('/user/get/profile')
+def get_profile():
+    if session.get('email') is None:
+        return render_template("login.jinja2", message="You must be logged in to add profile")
+    else:
+        user = User.get_user_by_email(collection=UserConstants.COLLECTION, email=session['email'])
+        if user is not None:
+            profile = user.profile
+            if not profile:
+                return make_response(set_profile())
+
+            return render_template("user/view_profile.html", profile=profile)
+        else:
+            return render_template("login.jinja2", message="You must be logged in to add profile")
