@@ -1,3 +1,5 @@
+import os
+
 import src.models.users.constants as UserConstants
 from flask import Blueprint, render_template, make_response, request, session
 
@@ -8,6 +10,8 @@ from src.models.users.user import User
 __author__ = 'ibininja'
 
 user_blueprints = Blueprint('users', __name__)
+
+APP_ROOT = (os.path.realpath('./'))
 
 
 @user_blueprints.route('/admin/list/users')
@@ -33,10 +37,34 @@ def set_profile():
         else:
             full_name = request.form['full_name']
             country = request.form['country']
+            uploaded_file_list = request.files.getlist("file")
             user = User.get_user_by_email(collection=UserConstants.COLLECTION, email=session['email'])
-            profile = [{"full_name": full_name}, {"country": country}]
+
+            # Target folder for these uploads.
+            target = os.path.join(APP_ROOT, 'static/resources/images/{}/profile'.format(user.username))
+            # target = './static/resources/{}'.format(upload_key)
+            try:
+                if not os.path.isdir(target):
+                    os.mkdir(target)
+            except Exception as e:
+                print(e)
+                return render_template("message_center.jinja2",
+                                       message="System was not able to store uploaded file in server! Contact Admin.")
+            filename = ''
+
+            images_path =''
+            for upload in uploaded_file_list:
+                print(upload.filename)
+                filename = upload.filename.rsplit("/")[0]
+                # TODO: Change this to be in Config File.
+                destination = os.path.join(APP_ROOT,
+                                           'static/resources/images/{}/profile/{}'.format(user.username, filename))
+                images_path = 'resources/images/{}/profile/{}'.format(user.username, filename)
+                # destination = "/".join([target, filename])
+                upload.save(destination)
+            profile = [{"avatar": images_path},{"full_name": full_name}, {"country": country} ]
             user.set_profile(profile)
-            return render_template("user/view_profile.html")
+            return make_response(get_profile())
 
 
 @user_blueprints.route('/user/get/profile')

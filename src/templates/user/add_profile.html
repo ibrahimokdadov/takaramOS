@@ -5,15 +5,23 @@
     {% if message is defined %}
         <h4 class="text-center"><span class="label label-danger">{{ message }}</span></h4>
         {% endif %}
-    <form id="register-form" action="/user/set/profile" method="post">
+    <form id="register-form" action="/user/set/profile" method="post" enctype="multipart/form-data">
 
         <div class="form-group">
             <label for="full_name">full name</label>
-            <input type="text" id="full_name" name="full_name" class="form-control" placeholder="Example: ibrahim">
+            <input type="text" id="full_name" name="full_name" class="form-control" placeholder="Example: ibi The Ninja">
         </div>
         <div class="form-group">
             <label for="country">country</label>
-            <input type="text" id="country" name="country" class="form-control" placeholder="Email@example.com">
+            <input type="text" id="country" name="country" class="form-control" placeholder="email@example.com">
+        </div>
+
+        <div class="form-group">
+            <label for="file">choose an avatar:</label><br>
+            <div class="btn btn-default image-preview-input"><span class="glyphicon glyphicon-folder-open"></span> <span
+                    class="image-preview-input-title">Browse</span>
+                <input type="file" id="file" name="file" accept="image/*" multipleclass="form-control">
+            </div>
         </div>
 
          <button type="submit" id="submit-button" class="btn btn-primary">add profile</button>

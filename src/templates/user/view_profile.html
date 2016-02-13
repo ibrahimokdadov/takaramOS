@@ -2,6 +2,66 @@
 {% block content %}
 <div class="container form-width">
     <h1 class="text-center"> Profile  Details</h1>
+
+
+    	<div class="row center-block">
+
+            <div class="card hovercard">
+                <div class="cardheader">
+
+                </div>
+
+                {%for i in profile%}
+
+                {%for key, value in i.items() %}
+
+                {%if key == "avatar"%}
+                 <h2>Avatar:</h2>
+                <div class="avatar">
+                    <img width="140px" class="pic img-thumbnail" src="{{ url_for('static', filename='{}'.format( value)) }}" alt="...">
+                </div>
+
+                {%endif%}
+                <div class="info">
+                {%if key == "full_name"%}
+                    <div class="title">
+                         {{value}}
+                    </div>
+                    <div class="desc">heart</div>
+                {%endif%}
+                {%if key == "country"%}
+                <div class="desc">country: {{value}}</div>
+                {%endif%}
+                </div>
+
+
+                {%endfor%}
+    {%endfor%}
+                <div class="bottom">
+                    <a class="btn btn-primary btn-twitter btn-sm" href="#">
+                        <i class="fa fa-twitter"></i>
+                    </a>
+                    <a class="btn btn-danger btn-sm" rel="publisher"
+                       href="#">
+                        <i class="fa fa-google-plus"></i>
+                    </a>
+                    <a class="btn btn-primary btn-sm" rel="publisher"
+                       href="#">
+                        <i class="fa fa-facebook"></i>
+                    </a>
+                    <a class="btn btn-warning btn-sm" rel="publisher" href="#">
+                        <i class="fa fa-behance"></i>
+                    </a>
+                </div>
+
+            </div>
+
+
+
+	</div>
+
+
+
     {% if message is defined %}
 
         <h4 class="text-center"><span class="label label-danger">{{ message }}</span></h4>
@@ -9,19 +69,7 @@
 
 
     <hr>
-    {%for i in profile%}
-        {%for key, value in i.items() %}
 
-            {%if key == "full_name"%}
-             <h2>Full Name: </h2> {{value}}
-            {%endif%}
-
-            {%if key == "country"%}
-             <h2>Country: </h2> {{value}}
-            {%endif%}
-
-        {%endfor%}
-    {%endfor%}
     <hr>
 
 </div>
