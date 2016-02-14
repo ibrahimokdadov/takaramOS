@@ -18,15 +18,16 @@ APP_ROOT = (os.path.realpath('./'))
 
 
 @item_blueprints.route('/user/items/view')
+@item_decorators.requires_login
 def view_items():
-    if session.get('email') is None:
+    # if session.get('email') is None:
+    #     return render_template("login.jinja2", message="You must be logged in to view your items")
+    # else:
+    if session['email'] is None:
         return render_template("login.jinja2", message="You must be logged in to view your items")
-    else:
-        if session['email'] is None:
-            return render_template("login.jinja2", message="You must be logged in to view your items")
-        user = User.get_user_by_email(session['email'], UserConstants.COLLECTION)
-        items = Item.get_items_by_user_id(user._id)
-        return render_template("items.jinja2", items=items)
+    user = User.get_user_by_email(session['email'], UserConstants.COLLECTION)
+    items = Item.get_items_by_user_id(user._id)
+    return render_template("items.jinja2", items=items)
 
 
 @item_blueprints.route('/items/view')
@@ -93,20 +94,22 @@ def item_details(item_id):
 
 
 @item_blueprints.route('/user/items/delete/<string:item_id>')
+@item_decorators.requires_login
 def delete_item(item_id):
-    if session.get('email') is not None:
-        item = Item.get_item_by_id(item_id)
-        if item is not None:
-            user = User.get_user_by_email(email=session['email'], collection=UserConstants.COLLECTION)
-            if item.user_id == user._id:
-                item.remove_item()
-                return make_response(view_items())
-        return render_template("items.jinja2", message="You can't remove item")
-    else:
-        return render_template("login.jinja2", message="You must be logged-in to remove items.")
+    # if session.get('email') is not None:
+    item = Item.get_item_by_id(item_id)
+    if item is not None:
+        user = User.get_user_by_email(email=session['email'], collection=UserConstants.COLLECTION)
+        if item.user_id == user._id:
+            item.remove_item()
+            return make_response(view_items())
+    return render_template("items.jinja2", message="You can't remove item")
+    # else:
+    #     return render_template("login.jinja2", message="You must be logged-in to remove items.")
 
 
 @item_blueprints.route('/user/items/edit/<string:item_id>/<string:attribute_name>/<string:attribute_value>')
+@item_decorators.requires_login
 def edit_item(item_id, attribute_name, attribute_value):
     item = Item.get_item_by_id(item_id)
     if item is not None:
@@ -124,6 +127,7 @@ def edit_item(item_id, attribute_name, attribute_value):
 
 
 @item_blueprints.route('/user/item/update/title', methods=['GET', 'POST'])
+@item_decorators.requires_login
 def update_title():
     item_id = request.form['pk']
     value = request.form['value']
@@ -137,6 +141,7 @@ def update_title():
 
 
 @item_blueprints.route('/user/item/update/description', methods=['GET', 'POST'])
+@item_decorators.requires_login
 def update_description():
     item_id = request.form['pk']
     value = request.form['value']
@@ -150,6 +155,7 @@ def update_description():
 
 
 @item_blueprints.route('/user/item/update/contact', methods=['GET', 'POST'])
+@item_decorators.requires_login
 def update_contact():
     item_id = request.form['pk']
     value = request.form['value']
