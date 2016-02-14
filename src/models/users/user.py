@@ -71,3 +71,8 @@ class User(object):
     def set_profile(self, profile):
         Database.update_one(UserConstants.COLLECTION, {"_id":self._id}, {"$set":{"profile":profile}})
 
+
+    def get_user_avatar_link(self):
+        link = Database.find_one(UserConstants.COLLECTION, {"_id": self._id}, {"avatar":1, "_id":0})
+        return link
+

@@ -8,7 +8,7 @@
     </ol>
     <hr>
     <h1 class="center-block"><span class="glyphicon glyphicon-plus-sign"></span> Add new item </h1>
-    <form id="new-movie-form" action="/user/items/add" method="post" enctype="multipart/form-data">
+    <form id="new-movie-form" action="{{url_for('items.add_item')}}" method="post" enctype="multipart/form-data">
         {% if message is defined %}
         <h4 class="text-center"><span class="label label-danger">{{ message }}</span></h4>
         {% endif %}

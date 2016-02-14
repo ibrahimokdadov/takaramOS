@@ -302,3 +302,12 @@ shape-rendering: crispEdges;
 }
 
 /*ends here*/
+
+.center{
+margin:0 auto;
+}
+
+.background-grey{
+background-color:#DDD;
+padding:20px;
+}
