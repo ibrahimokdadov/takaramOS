@@ -1,7 +1,7 @@
 import os
 
 import src.models.users.constants as UserConstants
-from flask import Blueprint, render_template, make_response, request, session
+from flask import Blueprint, render_template, make_response, request, session, url_for, redirect
 
 from src.common.database import Database
 from src.models.items.views import view_items
@@ -55,10 +55,8 @@ def set_profile():
             return render_template("message_center.jinja2",
                                    message="System was not able to store uploaded file in server! Contact Admin.")
         filename = ''
-
         images_path =''
         for upload in uploaded_file_list:
-            print(upload.filename)
             filename = upload.filename.rsplit("/")[0]
             # TODO: Change this to be in Config File.
             destination = os.path.join(APP_ROOT,
@@ -68,7 +66,7 @@ def set_profile():
             upload.save(destination)
         profile = [{"avatar": images_path},{"full_name": full_name}, {"country": country} ]
         user.set_profile(profile)
-        return make_response(get_profile())
+        return redirect(url_for('.get_profile'))
 
 
 @user_blueprints.route('/user/get/profile')
