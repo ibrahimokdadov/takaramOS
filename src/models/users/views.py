@@ -55,7 +55,7 @@ def set_profile():
             return render_template("message_center.jinja2",
                                    message="System was not able to store uploaded file in server! Contact Admin.")
         filename = ''
-        images_path =''
+        images_path = ''
         for upload in uploaded_file_list:
             filename = upload.filename.rsplit("/")[0]
             # TODO: Change this to be in Config File.
@@ -64,7 +64,7 @@ def set_profile():
             images_path = 'resources/images/{}/profile/{}'.format(user.username, filename)
             # destination = "/".join([target, filename])
             upload.save(destination)
-        profile = [{"avatar": images_path},{"full_name": full_name}, {"country": country} ]
+        profile = [{"avatar": images_path}, {"full_name": full_name}, {"country": country}]
         user.set_profile(profile)
         return redirect(url_for('.get_profile'))
 
@@ -84,3 +84,52 @@ def get_profile():
         return render_template("user/view_profile.html", profile=profile)
     else:
         return render_template("login.jinja2", message="You must be logged in to add profile")
+
+
+@user_blueprints.route('/user/edit/profile', methods=['GET', 'POST'])
+@user_decorators.requires_login
+def edit_profile():
+    if request.method == 'GET':
+        user = User.get_user_by_email(collection=UserConstants.COLLECTION, email=session['email'])
+        if user is not None:
+            profile = user.profile
+            if not profile:
+                return make_response(set_profile())
+
+            return render_template("user/edit_profile.html", profile=profile)
+        else:
+            return render_template("login.jinja2", message="You must be logged in to add profile")
+    else:
+        full_name = request.form['full_name']
+        country = request.form['country']
+        uploaded_file_list = request.files.getlist("file")
+        user = User.get_user_by_email(collection=UserConstants.COLLECTION, email=session['email'])
+        # Target folder for these uploads.
+        target = os.path.join(APP_ROOT, 'static/resources/images/{}/profile'.format(user.username))
+        # target = './static/resources/{}'.format(upload_key)
+        try:
+            if not os.path.isdir(target):
+                os.mkdir(target)
+        except Exception as e:
+            print(e)
+            return render_template("message_center.jinja2",
+                                   message="System was not able to store uploaded file in server! Contact Admin.")
+        filename = ''
+        images_path = ''
+        for upload in uploaded_file_list:
+            filename = upload.filename.rsplit("/")[0]
+            if filename == '':
+                break
+            # TODO: Change this to be in Config File.
+            destination = os.path.join(APP_ROOT,
+                                       'static/resources/images/{}/profile/{}'.format(user.username, filename))
+            images_path = 'resources/images/{}/profile/{}'.format(user.username, filename)
+            # destination = "/".join([target, filename])
+            upload.save(destination)
+        if filename == "":
+            user.update_profile({"_id": user._id},
+                                {"$set": {"profile.1": {"full_name": full_name}, "profile.2": {"country": country}}})
+        else:
+            profile = [{"avatar": images_path}, {"full_name": full_name}, {"country": country}]
+            user.set_profile(profile)
+        return redirect(url_for('.get_profile'))

@@ -76,3 +76,6 @@ class User(object):
         link = Database.find_one(UserConstants.COLLECTION, {"_id": self._id}, {"avatar":1, "_id":0})
         return link
 
+    def update_profile(self, query, set_query):
+        Database.update_one(UserConstants.COLLECTION, query, set_query)
+

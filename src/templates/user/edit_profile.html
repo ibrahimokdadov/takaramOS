@@ -1,0 +1,49 @@
+{% extends "base.jinja2" %}
+{% block content %}
+<div class="container form-width">
+
+    <div class="page-header">
+    <h1 class="text-center"> Profile <small> Details</small></h1>
+    </div>
+    	<div class="row center">
+
+            <form class="small-form" id="register-form" action="/user/edit/profile" method="post" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <label for="full_name">full name</label>
+            <input type="text" id="full_name" name="full_name" class="form-control" placeholder="Example: ibi The Ninja" value="{{profile[1]['full_name']}}">
+        </div>
+        <div class="form-group">
+
+            <label for="country">country</label>
+            <input type="text" id="country" name="country" class="form-control" placeholder="North Pole" value="{{profile[2]['country']}}">
+
+        </div>
+
+        <div class="form-group">
+            <div class="avatar">
+                    <img width="140px" class="pic img-thumbnail" src="{{ url_for('static', filename='{}'.format( profile[0]['avatar'])) }}" alt="...">
+            </div>
+            <label for="file">choose an avatar:</label><br>
+            <div class="btn btn-default image-preview-input"><span class="glyphicon glyphicon-folder-open"></span> <span
+                    class="image-preview-input-title">Browse</span>
+                <input type="file" id="file" name="file" accept="image/*" multipleclass="form-control">
+            </div>
+        </div>
+
+         <button type="submit" id="submit-button" class="btn btn-primary">edit profile</button>
+    </form>
+
+	    </div>
+
+
+
+    {% if message is defined %}
+        <h4 class="text-center"><span class="label label-danger">{{ message }}</span></h4>
+    {% endif %}
+
+
+    <hr>
+    <hr>
+</div>
+{% endblock %}

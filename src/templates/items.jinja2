@@ -3,6 +3,9 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/pinterest.css')}}">
 <script src="{{ url_for('static', filename='js/pinterest.js')}}"></script>
 <div class="container form-width">
+    <div class="page-header">
+    <h1 class="text-center"> Your Posted Items </h1>
+    </div>
     <h1 class="text-center"> Your Posted Items </h1>
     {% if message is defined %}
     <h4 class="text-center"><span class="label label-danger">{{ message }}</span></h4>

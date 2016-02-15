@@ -311,3 +311,8 @@ margin:0 auto;
 background-color:#DDD;
 padding:20px;
 }
+
+.small-form {
+max-width: 640px;
+margin: 0 auto
+}
