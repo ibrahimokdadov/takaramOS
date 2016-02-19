@@ -83,7 +83,6 @@ def get_message_details(message_id):
                 messages = Message.get_messages_by_item_id(message.item_id)
                 for reply in messages:
                     if (user._id == reply.recipient_id):
-                        print("reciever", reply.title)
                         reply.mark_massage_read()
 
                 return render_template("user/messages/message_details.jinja2", user_id=user._id, messages=messages,
