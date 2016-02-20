@@ -1,9 +1,20 @@
+      __          __                                        
+    _/  |______  |  | ______________    _____   ____  ______
+    \   __\__  \ |  |/ /\_  __ \__  \  /     \ /  _ \/  ___/
+     |  |  / __ \|    <  |  | \// __ \|  Y Y  (  <_> )___ \ 
+     |__| (____  /__|_ \ |__|  (____  /__|_|  /\____/____  >
+               \/     \/            \/      \/           \/ 
+
 # takaramOS
-Donation platform using python and mongodb
-This is platform for donations. Say you have things laying around and that you do not need. What many would tell you to do is to sell them.  This platform is intended to help people give to others. Something you may not need may be very useful to someone else.
+Scalable donations platform using python and mongodb
+This is a platform for donations. Say you have things laying around and you do not need. What many would tell you to do is to sell them. What happens if you could not sell it? or simply you do not want to sell it?  This platform is intended to help people give to others. Simply take a picture of the item upload it and let the world make use of it. 
+
+Here is the moto here: Something you may not need may be very useful to someone else.
 Do not hold back and start giving.
 
-This version is the alpha version many features are missing. Hopefully I will be add more features to it as time progresses. Feel free to tune in and help the way you want.
+This version is still in the alpha stage. Hopefully I will be adding more features to it as time goes. Feel free to tune in and help the way you want.
+
+Here is how it looks so far:
 
 ![alt tag](https://github.com/ibininja/takaramOS/blob/master/src/static/assets/takaramOS_small.png?raw=true) | ![alt tag](https://github.com/ibininja/takaramOS/blob/master/src/static/assets/takaram_dashboard_small.png?raw=true) 
 
