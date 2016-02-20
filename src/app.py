@@ -41,7 +41,7 @@ def is_list(value):
 
 
 @app.route('/')
-def home_page():
+def index():
     return render_template('home.jinja2', img_name="laptop.jpg")
 
 
@@ -104,6 +104,10 @@ def search():
     word = request.form['search_box']
     results = Item.search_items(word)
     return render_template("search.jinja2", results=results)
+
+@app.errorhandler(404)
+def not_found(error):
+    return render_template('404.html'), 404
 
 if __name__ == "__main__":
     app.run(port=4556, debug=True)

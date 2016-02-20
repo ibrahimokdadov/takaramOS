@@ -1,0 +1,28 @@
+{%extends "base.jinja2"%}
+{% block content %}
+
+<div class="container ">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <div class="error-template">
+                <h1>
+                    hmmm!</h1>
+                <h2>
+                    404 Not Found</h2>
+                <div >
+                    Sorry, an error has occured, Requested page not found!
+                </div>
+                <div >
+                    <a href="{{ url_for('items.view_items')}}" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-home"></span>
+                        Take Me Home </a><a href="{{ url_for('index')}}" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-envelope"></span> Contact Support </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{%endblock%}
