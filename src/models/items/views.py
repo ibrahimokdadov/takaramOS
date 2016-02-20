@@ -1,6 +1,6 @@
 import os
 
-from flask import Blueprint, session, render_template, make_response, request, jsonify
+from flask import Blueprint, session, render_template, make_response, request, flash, jsonify
 
 from src.models.items.item import Item
 from src.models.users.user import User
@@ -23,7 +23,7 @@ def view_items():
     # if session.get('email') is None:
     #     return render_template("login.jinja2", message="You must be logged in to view your items")
     # else:
-    if session['email'] is None:
+    if session.get('email') is None:
         return render_template("login.jinja2", message="You must be logged in to view your items")
     user = User.get_user_by_email(session['email'], UserConstants.COLLECTION)
     items = Item.get_items_by_user_id(user._id)
@@ -32,6 +32,8 @@ def view_items():
 
 @item_blueprints.route('/items/view')
 def view_all_items():
+    if session.get('email') is None:
+        flash("sign up for FREE to post your items.")
     items = Item.get_all_approved_items()
     return render_template("all_items.jinja2", items=items)
 
