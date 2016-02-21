@@ -98,3 +98,7 @@ class Message(object):
 
     def mark_massage_read(self):
         Database.update_one(MessageConstants.COLLECTION, {"_id":self._id}, {"$set":{"is_read":True}})
+
+    def get_unread_messages_count(user_id):
+        count = Database.find_count(MessageConstants.COLLECTION,{"recipient_id":user_id, "is_read":False})
+        return count

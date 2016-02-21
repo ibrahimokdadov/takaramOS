@@ -36,7 +36,11 @@
                             <a href="/user/items/view">My Items</a>
                         </li>
                         <li>
-                            <a href="/user/messages/recieved/{{ session['email'] }}">Messages</a>
+                            <a href="/user/messages/recieved/{{ session['email'] }}">Messages
+                            {%if session['msgs_count']%}
+                            <span class="badge badge-warning">{{session['msgs_count']}}</span>
+                            {%endif%}
+                            </a>
                         </li>
                     </ul>
 

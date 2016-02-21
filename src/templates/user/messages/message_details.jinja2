@@ -8,13 +8,13 @@
     <hr>
     <ol class="breadcrumb">
         <li><a href="/items/view">Home</a></li>
-        <li><a href="#">{{messages[0].title}}</a></li>
+        <li><a href="#">{{msgs[0].title}}</a></li>
         <li class="active"><a href="active">details</a></li>
     </ol>
     <hr>
     <div class="well">
         {% set first_time = 1 %}
-        {% for message in messages %}
+        {% for message in msgs %}
         {% if first_time == 1 %}
         <h1 class="center-block"> {{message.title}} details </h1>
         {% set first_time = 2 %}

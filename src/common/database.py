@@ -51,7 +51,7 @@ class Database(object):
 
     @staticmethod
     def find_and_count(collection, query):
-        return Database.DB[collection].find_one({'$and': [query]}).count()
+        return Database.DB[collection].find({'$and': [query]}).count()
 
     @staticmethod
     def remove(collection, query):

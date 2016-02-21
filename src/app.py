@@ -6,6 +6,7 @@ from src.models.admins.admin import Admin
 from src.models.admins.views import admin_blueprints
 from src.models.items.item import Item
 from src.models.items.views import item_blueprints, view_items
+from src.models.messages.message import Message
 from src.models.messages.views import message_blueprints
 from src.models.users.user import User
 import src.models.admins.constants as AdminConstants
@@ -80,6 +81,8 @@ def login():
                     admin = Admin.get_user_by_email(username_email, AdminConstants.COLLECTION)
                     if admin is not None:
                         session['admin'] = admin.email
+                    unread_messages = Message.get_unread_messages_count(user._id)
+                    session['msgs_count'] = unread_messages
                     return make_response(view_items())
                 else:
                     return render_template("login.jinja2", message="Invalid login")
@@ -97,6 +100,7 @@ def login():
 def logout():
     session['email'] = None
     session['admin'] = None
+    session['msgs_count'] = None
     return render_template("home.jinja2")
 
 @app.route('/search', methods=['GET', 'POST'])

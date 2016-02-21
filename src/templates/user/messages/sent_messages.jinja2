@@ -62,8 +62,8 @@
             <div class="tab-content">
                 <div class="tab-pane fade in active" id="home">
                     <div class="list-group">
-                        {% if messages|length > 0 %}
-                        {%for message in messages%}
+                        {% if msgs|length > 0 %}
+                        {%for message in msgs%}
                         {% if message.is_read == true%}
                         <a href="/user/message/details/{{message._id}}" class="list-group-item read">
                             {% else %}

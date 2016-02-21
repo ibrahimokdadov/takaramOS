@@ -27,8 +27,8 @@ def get_sent_messages(user_email):
                 for message in messages:
                     unread_replies_list[message._id] = Message.get_unread_recieved_replies_count(user_id=user._id,
                                                                                                  item_id=message.item_id)
-
-                return render_template("user/messages/sent_messages.jinja2", user_id=user._id, messages=messages,
+                session['msgs_count'] = Message.get_unread_messages_count(user._id)
+                return render_template("user/messages/sent_messages.jinja2", user_id=user._id, msgs=messages,
                                        unread_replies=unread_replies_list,
                                        unread_recieved_messages_count=unread_recieved_messages_count)
             else:
@@ -57,7 +57,8 @@ def get_recieved_messages(user_email):
                 for message in messages:
                     unread_replies_list[message._id] = message.get_unread_recieved_replies_count(user_id=user._id,
                                                                                                  item_id=message.item_id)
-                return render_template("user/messages/recieved_messages.jinja2", user_id=user._id, messages=messages,
+                session['msgs_count'] = Message.get_unread_messages_count(user._id)
+                return render_template("user/messages/recieved_messages.jinja2", msgs=messages, user_id=user._id,
                                        unread_messages_count=unread_messages_count, unread_replies=unread_replies_list,
                                        unread_sent_messages_count=unread_sent_messages_count)
             else:
@@ -84,8 +85,8 @@ def get_message_details(message_id):
                 for reply in messages:
                     if (user._id == reply.recipient_id):
                         reply.mark_massage_read()
-
-                return render_template("user/messages/message_details.jinja2", user_id=user._id, messages=messages,
+                session['msgs_count'] = Message.get_unread_messages_count(user._id)
+                return render_template("user/messages/message_details.jinja2", user_id=user._id, msgs=messages,
                                        item=item)
             else:
                 return render_template("message_center.jinja2",

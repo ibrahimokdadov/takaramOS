@@ -3,6 +3,7 @@ import os
 from flask import Blueprint, session, render_template, make_response, request, flash, jsonify
 
 from src.models.items.item import Item
+from src.models.messages.message import Message
 from src.models.users.user import User
 import src.models.admins.constants as AdminConstants
 import src.models.items.constants as ItemConstants
@@ -27,6 +28,7 @@ def view_items():
         return render_template("login.jinja2", message="You must be logged in to view your items")
     user = User.get_user_by_email(session['email'], UserConstants.COLLECTION)
     items = Item.get_items_by_user_id(user._id)
+    session['msgs_count'] = Message.get_unread_messages_count(user._id)
     return render_template("items.jinja2", items=items)
 
 
@@ -34,6 +36,9 @@ def view_items():
 def view_all_items():
     if session.get('email') is None:
         flash("sign up for FREE to post your items.")
+    else:
+        user = User.get_user_by_email(session['email'], UserConstants.COLLECTION)
+        session['msgs_count'] = Message.get_unread_messages_count(user._id)
     items = Item.get_all_approved_items()
     return render_template("all_items.jinja2", items=items)
 
@@ -83,6 +88,7 @@ def item_details(item_id):
     if item is not None:
         if session.get('email') is not None:
             user = User.get_user_by_email(email=session['email'], collection=UserConstants.COLLECTION)
+            session['msgs_count'] = Message.get_unread_messages_count(user._id)
             if (user._id == item.user_id) or (session.get('admin') is not None):
                 return render_template("item_details.jinja2", item=item, editable=True)
             else:
