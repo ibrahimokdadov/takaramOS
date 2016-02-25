@@ -59,7 +59,8 @@ This project is made using:
 ###todos
 * add encryption to registration and logging in* 
 * add profile image to accounts and navbar
-* add graphs showing new items each day  
+* add graphs showing new items each day 
+* add email handling
 
 ###done
 * ~~add edit items~~
