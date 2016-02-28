@@ -1,5 +1,14 @@
+import sys
 import os
 from flask import Flask, render_template, request, session, make_response, url_for, send_from_directory
+
+__author__ = 'ibininja'
+
+app = Flask(__name__)
+app.secret_key = 'takaram'
+app.config.from_object('config')
+sys.path.extend([app.config['APP_PATH']])
+
 
 from src.common.database import Database
 from src.models.admins.admin import Admin
@@ -14,10 +23,7 @@ import src.models.users.constants as UserConstants
 import src.models.items.constants as ItemConstants
 from src.models.users.views import user_blueprints
 
-__author__ = 'ibininja'
 
-app = Flask(__name__)
-app.secret_key = 'takaram'
 
 # UPLOAD_FOLDER = './static/resources/'
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
