@@ -54,11 +54,13 @@ This project is made using:
 * messaging system to communicate with item owner from within the app.
  * send and recieve message about posted items
  * notifications for new unread messages.
+ * notifications in navbar
 
 ###todos
 * add encryption to registration and logging in* 
 * add profile image to accounts and navbar
-* add graphs showing new items each day  
+* add graphs showing new items each day 
+* add email handling
 
 ###done
 * ~~add edit items~~
