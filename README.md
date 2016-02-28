@@ -33,8 +33,8 @@ This project is made using:
 
 ###running on local
 To run this project. simply install all requirements in requirements.txt and then in <b>config.py</b> set the <b>APP_PATH</b> to where the folder project is. Example
-If project is (windows) in <code>C:\\takramOS\src</code> set the path as: 
-<code>APP_PATH 'C:\\takaramos'</code>
+If project is in (windows) <code>C:\\\takramOS\src</code> set the path as: 
+<code>APP_PATH 'C:\\\takaramos'</code>
 
 ###current features
 * register and signup
