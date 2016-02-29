@@ -268,10 +268,31 @@
             <div class="btn btn-default image-preview-input"><span class="glyphicon glyphicon-folder-open"></span> <span
                     class="image-preview-input-title">Browse</span>
                 <input type="file" id="file" name="file" accept="image/*" multipleclass="form-control">
+                <hr>
+                <div class="col-md-4 col-xs-6 thumb">
+                <img class="img-responsive" id="img_preview" src="http://placehold.it/100x100" />
+                </div>
             </div>
         </div>
 
          <button type="submit" id="submit-button" class="btn btn-primary">add profile</button>
     </form>
 </div>
+
+<script>
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $('#img_preview').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+$("#file").change(function () {
+    readURL(this);
+});
+
+</script>
 {% endblock %}
