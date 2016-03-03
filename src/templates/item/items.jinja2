@@ -2,26 +2,24 @@
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/pinterest.css')}}">
 <script src="{{ url_for('static', filename='js/pinterest.js')}}"></script>
-
 <div class="container form-width">
-    <div class="peage-header">
+    <div class="page-header">
     <div class="panel panel-default">
-    <h1 class="text-center"> Published <small>Items</small> </h1>
+    <h1 class="text-center"> My <small>Posted Items</small> </h1>
     </div>
     </div>
+
     {% if message is defined %}
     <h4 class="text-center"><span class="label label-danger">{{ message }}</span></h4>
     {% endif %}
-    <div style="text-align:center">
-        <a href="/user/items/add">
-            <button class="btn btn-success"><i class="fa fa-plus"></i> add item</button>
-        </a>
-    </div>
+    <a href="/user/items/add">
+        <button class="center-block btn btn-success"><i class="fa fa-plus"></i> add item</button>
+    </a>
 </div>
 <hr>
 <ol class="breadcrumb">
-    <li><a href="#">home</a></li>
-    <li class="active"><a href="#">all items</a></li>
+  <li><a href="#">home</a></li>
+  <li class="active"><a href="#">my items</a></li>
 </ol>
 <hr>
 <section id="pinBoot">
@@ -32,7 +30,8 @@
             <div class="well">
                 <a href="/user/items/detail/{{item._id}}"><h3>{{ item.title }}</h3></a>
             </div>
-            <h6>Date Posted: {{ item.date_posted|datetimeformat }}</h6>
+            <p>Date Posted: {{ item.date_posted|datetimeformat }}</p>
+            <p><b>Contact Information: {{ item.contact }}</b></p>
             {% if item.image_url|is_list %}
             {%set one_image = false%}
             {% for url in item.image_url %}
@@ -54,9 +53,18 @@
                 </a>
             </div>
             {% endif %}
-            <p><b>Contact Information: {{ item.contact }}</b></p>
             <p>Description: {{ item.description }}</p>
+            <p class="text-muted" style="font-size: 11px;">
+            {%for i in item.category %}
+            {{ i }}
+            {%if item.category | length>1%}
+            ,
+            {%endif%}
+            {%endfor%}
+            </p>
+            <a class="label label-danger" href="/user/items/delete/{{item._id}}"><i class="fa fa-trash-o"></i> delete</a>
         </div>
+        <hr>
     </article>
     {% endfor %}
     {% else %}

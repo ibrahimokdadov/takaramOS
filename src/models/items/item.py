@@ -11,7 +11,7 @@ __author__ = 'ibininja'
 
 
 class Item(object):
-    def __init__(self, title, description, image_url, contact, user_id, approved=False, _id=None,
+    def __init__(self, title, description, image_url, contact, user_id, category = None, approved=False, _id=None,
                  date_posted=datetime.datetime.utcnow()):
         self.title = title
         self.description = description
@@ -19,6 +19,7 @@ class Item(object):
         self.date_posted = date_posted
         self.contact = contact
         self.user_id = user_id
+        self.category = category
         self.approved = approved
         self._id = uuid.uuid4().hex if _id is None else _id
 
@@ -30,6 +31,7 @@ class Item(object):
             "date_posted": self.date_posted,
             "contact": self.contact,
             "user_id": self.user_id,
+            "category": self.category,
             "approved": self.approved,
             "_id": self._id,
 

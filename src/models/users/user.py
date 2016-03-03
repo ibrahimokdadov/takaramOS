@@ -31,8 +31,8 @@ class User(object):
     def save_to_mongo(self):
         Database.insert(UserConstants.COLLECTION, self.json())
 
-    def add_item(self, title, description, image_url, contact):
-        item = Item(title, description, image_url, contact, self._id)
+    def add_item(self, title, description, image_url, contact, category):
+        item = Item(title=title, description=description, image_url=image_url, contact=contact, category=category, user_id= self._id)
         item.save_to_mongo()
 
     @classmethod

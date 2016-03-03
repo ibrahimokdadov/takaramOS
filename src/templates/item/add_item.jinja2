@@ -37,6 +37,17 @@
             <input type="text" id="contact" name="contact" class="form-control" placeholder="Tel/email">
         </div>
 
+        <div class="form-group">
+            <label for="category">Category</label>
+            <select class="form-control" id="category" name="category">
+                {%for category in categories%}
+                <option value={{category}}>{{category}}</option>
+                {%endfor%}
+            </select>
+        </div>
+
+
+
         <button type="submit" id="submit-button" class="btn btn-primary">Add Item</button>
     </form>
 </div>

@@ -35,6 +35,15 @@
         {% else %}
         <p>Contact: {{ item.contact }}</p>
         {% endif %}
+
+        <p> Category:
+            {%for i in item.category %}
+            {{ i }}
+            {%if item.category | length>1%}
+            ,
+            {%endif%}
+            {%endfor%}
+            </p>
     </div>
 
 

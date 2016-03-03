@@ -19,10 +19,7 @@ admin_blueprints = Blueprint('admins', __name__)
 def dashboard():
     # verify User is admin
     # if session.get('admin') is None:
-    if session.get('email') is not None:
-        return render_template("message_center.jinja2", message="The page you requested is not available")
-    else:
-        return render_template("login.jinja2", message="You are not logged in.")
+
     # else:
     admin = Admin.get_user_by_email(session['admin'], AdminConstants.COLLECTION)
     if admin is None:
@@ -63,10 +60,7 @@ def get_posted_users_count():
 @admin_decorators.requires_admin_login
 def pending_items():
     # if session.get('admin') is None:
-    if session.get('email') is not None:
-        return render_template("message_center.jinja2", message="The page you requested is not available")
-    else:
-        return render_template("login.jinja2", message="You are not logged in.")
+
     # else:
     admin = Admin.get_user_by_email(session['admin'], AdminConstants.COLLECTION)
     if admin is None:
