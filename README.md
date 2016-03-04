@@ -41,7 +41,7 @@ If project is in (windows) <code>C:\\\takramOS\src</code> set the path as:
 * user can add profile
 * user can edit profile
 * if user does not have profile will automatically be prompted to create one.
-* add item [inc. uploading images]
+* add item [inc. uploading images and category from category list in config.py]
 * each users edits their own items
 * delete item
 * view items without loggin in
@@ -55,6 +55,7 @@ If project is in (windows) <code>C:\\\takramOS\src</code> set the path as:
  * view basic statistics (number of items, number of user)
  * view list of users
  * delete specific user
+ * admin should be able to add custom category names to config.py
 * ability to search for items
 * messaging system to communicate with item owner from within the app.
  * send and recieve message about posted items
