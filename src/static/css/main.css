@@ -314,5 +314,8 @@ padding:20px;
 
 .small-form {
 max-width: 640px;
-margin: 0 auto
+margin: 0 auto;
+background-color:#ddd;
+padding:25px;
+
 }

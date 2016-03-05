@@ -7,21 +7,32 @@
         <li class="active"><a href="active">add item</a></li>
     </ol>
     <hr>
-    <h1 class="center-block"><span class="glyphicon glyphicon-plus-sign"></span> Add new item </h1>
-    <form id="new-movie-form" action="{{url_for('items.add_item')}}" method="post" enctype="multipart/form-data">
+    <h1 class="text-center center-block"><span class="glyphicon glyphicon-plus-sign"></span> Add new item </h1>
+    <form class="small-form form-horizontal" id="new-movie-form" action="{{url_for('items.add_item')}}" method="post" enctype="multipart/form-data">
         {% if message is defined %}
         <h4 class="text-center"><span class="label label-danger">{{ message }}</span></h4>
         {% endif %}
         <div class="form-group">
+        <div class="col-md-2">
             <label for="title">Title</label>
+            </div>
+            <div class="col-md-8">
             <input type="text" id="title" name="title" class="form-control" placeholder="Example: Ice Age">
+            </div>
         </div>
         <div class="form-group">
+        <div class="col-md-2">
             <label for="description">Description</label>
+            </div>
+            <div class="col-md-8">
             <textarea type="text" id="description" name="description" class="form-control"></textarea>
+            </div>
         </div>
         <div class="form-group">
+        <div class="col-md-2">
             <label for="file">Image Url:</label><br>
+            </div>
+            <div class="col-md-8">
             <div class="btn btn-default image-preview-input"><span class="glyphicon glyphicon-folder-open"></span> <span
                     class="image-preview-input-title">Browse</span>
 
@@ -31,19 +42,28 @@
                 <img class="img-responsive" id="img_preview" src="http://placehold.it/100x100"  />
                 </div>
             </div>
+            </div>
         </div>
         <div class="form-group">
+        <div class="col-md-2">
             <label for="contact">Contact</label>
+            </div>
+            <div class="col-md-8">
             <input type="text" id="contact" name="contact" class="form-control" placeholder="Tel/email">
+            </div>
         </div>
 
         <div class="form-group">
+        <div class="col-md-2">
             <label for="category">Category</label>
+            </div>
+            <div class="col-md-8">
             <select class="form-control" id="category" name="category">
                 {%for category in categories%}
                 <option value={{category}}>{{category}}</option>
                 {%endfor%}
             </select>
+            </div>
         </div>
 
 
