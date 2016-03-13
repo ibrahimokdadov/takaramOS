@@ -39,19 +39,19 @@ class Database(object):
 
     @staticmethod
     def find_or(collection, query):
-        return Database.DB[collection].find_one({'$or': [query]})
+        return Database.DB[collection].find_one({'$or': query})
 
     @staticmethod
     def find_or_count(collection, query):
-        return Database.DB[collection].find_one({'$or': [query]}).count()
+        return Database.DB[collection].find_one({'$or': query}).count()
 
     @staticmethod
     def find_and(collection, query):
-        return Database.DB[collection].find_one({'$and': [query]})
+        return Database.DB[collection].find_one({'$and': query})
 
     @staticmethod
     def find_and_count(collection, query):
-        return Database.DB[collection].find({'$and': [query]}).count()
+        return Database.DB[collection].find({'$and': query}).count()
 
     @staticmethod
     def remove(collection, query):
